@@ -81,7 +81,7 @@ const Sidebar = () => {
                         </div>
                         {/* </Link> */}
                         {/* orders button */}
-                        <Link to="/">
+                        <Link to="/Orders">
                             <Button className='w-100 d-flex justify-content-start align-items-center'>
                                 <span className='icon'>
                                     <IoCart/>

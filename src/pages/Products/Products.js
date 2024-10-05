@@ -70,7 +70,7 @@ const Products = () => {
                 <h5 className='mb-0'>Product Lists</h5>
                 <Breadcrumbs aria-label='breadcrumb' className='ms-auto breadcrumb_'>
                     <StyledBreadcrumb component='a' href='#' label='Dashboard' icon={<FaHome fontSize='small'/>}/>
-                    <StyledBreadcrumb label='Product' deleteIcon={<MdDelete/>}/>
+                    <StyledBreadcrumb label='Products' deleteIcon={<MdDelete/>}/>
                 </Breadcrumbs>
             </div>
 

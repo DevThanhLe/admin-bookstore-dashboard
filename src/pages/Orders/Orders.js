@@ -7,9 +7,10 @@ import React from 'react';
 // import Pagination from '@mui/material/Pagination';
 import { FaHome } from "react-icons/fa";
 import { Breadcrumbs } from '@mui/material';
-import UserTable from './components/UserTable';
+// import UserTable from './components/UserTable';
 import { emphasize, styled } from '@mui/material/styles';
 import Chip from '@mui/material/Chip';
+import OrderTable from './components/OrderTable';
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
     const backgroundColor =
@@ -31,25 +32,25 @@ const StyledBreadcrumb = styled(Chip)(({ theme }) => {
     };
 });
 
-const User = () => {
+const Orders = () => {
     return (
         <div className='right-content w-100'>
 
             <div className='card shadow border-0 w-100 flex-row p-4'>
-                    <h5 className='mb-0'>Users List</h5>
+                    <h5 className='mb-0'>Orders List</h5>
                     <Breadcrumbs aria-label='breadcrumb' className='ms-auto breadcrumb_'>
                         <StyledBreadcrumb component='a' href='#' label='Dashboard' icon={<FaHome fontSize='small'/>}/>
-                        <StyledBreadcrumb label='Users'/>
+                        <StyledBreadcrumb label='Orders'/>
                     </Breadcrumbs>
             </div>
 
             <div className='card shadow border-0 p-3 mt-4'>
 
                 {/* table product data */}
-                <UserTable/>
+                <OrderTable/>
             </div>
         </div>
     );
 };
 
-export default User;
+export default Orders;
