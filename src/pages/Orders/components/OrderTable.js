@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@mui/material';
 import { FaPencil } from "react-icons/fa6";
 import { FaEye } from "react-icons/fa";
 import { IoTrashBin } from "react-icons/io5";
 import Pagination from '@mui/material/Pagination';
+import EditDialog from './EditDialog';
 
 const ordersData = [
     {
@@ -57,6 +58,25 @@ const ordersData = [
 ];
 
 const OrderTable = () => {
+
+    const [open, setOpen] = useState(false);
+    const [current, setCurrent] = useState(null);
+
+    const handleClickOpen = (order) => {
+        setCurrent(order);
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleSave = () => {
+        // Save the changes here, you might need to update the state or make an API call
+        setOpen(false);
+    };
+
+
     return (
         <div className='table-responsive mt-4'>
             <table className='table table-bordered v-align'>
@@ -95,7 +115,7 @@ const OrderTable = () => {
                                     {/* <Link to={`/Products/Details/${product.id}`}> */}
                                         <Button className="secondary" color="secondary"><FaEye /></Button>
                                     {/* </Link> */}
-                                    <Button className="success" color="success"><FaPencil /></Button>
+                                    <Button className="success" color="success" onClick={() => handleClickOpen(order)} ><FaPencil /></Button>
                                     <Button className="error" color="error"><IoTrashBin /></Button>
                                 </div>
                             </td>
@@ -107,6 +127,14 @@ const OrderTable = () => {
             <div className="d-flex tableFooter">
                 <Pagination count={4} className='pagination' showFirstButton showLastButton />
             </div>
+            {/* edit dialog  */}
+            <EditDialog
+                open={open}
+                handleClose={handleClose}
+                current={current}
+                setCurrent={setCurrent}
+                handleSave={handleSave}
+            />
         </div>
     );
 };
