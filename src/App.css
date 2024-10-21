@@ -11,6 +11,10 @@ body{
   padding: 0px;
 }
 
+h4{
+  line-height: 30px;
+}
+
 .btn-blue{
   background: #0858f7 !important;
   font-size: 14px !important;
@@ -42,6 +46,10 @@ body{
 .link:hover{
   color: #0858f7 !important;
   text-decoration: none !important;
+}
+
+.slick-slide{
+  outline: none !important;
 }
 
 header{
@@ -756,3 +764,56 @@ table tbody .custom-td-product{
   color: #000 !important;
 }
 
+.sliderSml .slick-slide{
+  padding-right: 10px;
+}
+
+.sliderSml .slick-slide .slide-item{
+  border-radius: 7px !important;
+  overflow: hidden;
+}
+
+.sliderSml{
+  width: 360px;
+}
+
+.sliderBig{
+  width: 350px;
+}
+
+.sliderBig .slide-item{
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.sliderBig img {
+  width: 350px;
+  height: 470px;
+}
+
+.leftcontent{
+  width: 430px;
+}
+
+.sliderSml *,.sliderBig *{
+  transition: all 0.2s !important;
+}
+
+.productDetailsSection .productInfo .icon{
+  width: 18%;
+  flex: 0 0 18%;
+}
+
+.productDetailsSection .productInfo .icon svg{
+  font-size: 30px;
+}
+
+.productDetailsSection .productInfo .name{
+  width: 82%;
+  flex: 0 0 82%;
+  margin-left: 10px;
+}
+
+.productDetailsSection .productInfo .name-detail{
+  width: 190px !important;
+}

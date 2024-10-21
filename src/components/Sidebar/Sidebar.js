@@ -35,7 +35,7 @@ const Sidebar = () => {
                 {/* <ul> */}
                     {/* <li> */}
                         {/* dashboard button */}
-                        <Link to="/">
+                        <Link to="/Dashboard">
                             <Button className='w-100 d-flex justify-content-start align-items-center' onClick={() => isOpenSubmenu(0)}>
                                 <span className='icon'>
                                     <MdSpaceDashboard/>
@@ -93,7 +93,7 @@ const Sidebar = () => {
                             </Button>
                         </Link>
                         {/* revenue button */}
-                        <Link to="/">
+                        <Link to="/Revenue">
                             <Button className='w-100 d-flex justify-content-start align-items-center'>
                                 <span className='icon'>
                                     <FaChartLine/>

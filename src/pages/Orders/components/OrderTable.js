@@ -35,7 +35,7 @@ const ordersData = [
         "orderId": 2,
         "userId": 1,
         "orderDate": "2024-05-20T00:00:00",
-        "status": "Cancel",
+        "status": "Canceled",
         "totalAmount": 67000,
         "name": "User Two",
         "phone": "1234567890",

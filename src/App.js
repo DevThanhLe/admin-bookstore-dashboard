@@ -49,9 +49,9 @@ function App() {
 
           <div className={`content ${isHideSidebarAndHeader ===true? 'full' : ''} ${isToggleSidebar===true ? 'toggle' : ''}`}>
             <Routes>
-              <Route path="/" exact={true} element={<Dashboard/>}/>
-              <Route path="/Dashboard" exact={true} element={<Dashboard/>}/>
               <Route path="/Login" exact={true} element={<Login/>}/>
+              <Route path="/" exact={true} element={<Login/>}/>
+              <Route path="/Dashboard" exact={true} element={<Dashboard/>}/>
               <Route path="/Products" exact={true} element={<Products/>}/>
               <Route path="/Products/Details/:id" exact={true} element={<ProductDetails/>}/>
               <Route path="/Products/Details" exact={true} element={<ProductDetails/>}/>

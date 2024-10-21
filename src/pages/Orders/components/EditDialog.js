@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 
 const EditDialog = ({ open, handleClose, current, setCurrent, handleSave }) => {
     return (
@@ -40,14 +40,17 @@ const EditDialog = ({ open, handleClose, current, setCurrent, handleSave }) => {
                             value={current.orderDate.split('T')[0]}
                             onChange={(e) => setCurrent({ ...current, orderDate: e.target.value })}
                         />
-                        <TextField
-                            margin="dense"
-                            label="Status"
-                            type="text"
-                            fullWidth
-                            value={current.status}
-                            onChange={(e) => setCurrent({ ...current, status: e.target.value })}
-                        />
+                        <FormControl fullWidth margin="dense">
+                            <InputLabel>Status</InputLabel>
+                            <Select
+                                value={current.status}
+                                onChange={(e) => setCurrent({ ...current, status: e.target.value })}
+                                label="Status"
+                            >
+                                <MenuItem value="Completed">Completed</MenuItem>
+                                <MenuItem value="Canceled">Canceled</MenuItem>
+                            </Select>
+                        </FormControl>
                         <TextField
                             margin="dense"
                             label="Total Amount"
