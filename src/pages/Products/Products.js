@@ -8,6 +8,12 @@ import productsData from './ProductData'
 // import Button from '@mui/material/Button'
 import { Link } from 'react-router-dom';
 import Search from '../../components/Search/Search';
+import GenreSelect from './components/GenreSelect';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import OutlinedInput from '@mui/material/OutlinedInput';
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
     const backgroundColor =
@@ -62,7 +68,13 @@ const ProductStructure = ({ id,name, price, originalPrice, reviews, rating, imag
 }
 
 const Products = () => {
+    const [order, setOrder] = React.useState('');
+
+    const handleChange = (event) => {
+      setOrder(event.target.value);
+    };
     return(
+      
         <div className='right-content w-100'>
 
 
@@ -76,8 +88,36 @@ const Products = () => {
 
 
             <div className='product-box'>
-              <div className='product-search pb-3'>
-                  <Search/>
+              <div className='product-search pb-3 d-flex align-items-center'>
+                  <div className='searchProductWrapper'>
+                    <Search />
+                  </div>
+                  <div className='col-md-3 genreWrapper'>
+                    <GenreSelect/>
+                  </div>
+                  <div className='order-select'>
+                    <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                      <InputLabel id="demo-multiple-checkbox-label">Order By</InputLabel>
+                      <Select
+                        labelId="demo-select-small-label"
+                        id="demo-select-small"
+                        value={order}
+                        input={<OutlinedInput label="Order By" />}
+                        onChange={handleChange}
+                        sx={{
+                          '& .MuiOutlinedInput-notchedOutline': {
+                            borderColor: '#000',
+                          },
+                        }}
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        <MenuItem value={1}>Ascending</MenuItem>
+                        <MenuItem value={2}>Descending</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
               </div>
 
               <div className="product-list">

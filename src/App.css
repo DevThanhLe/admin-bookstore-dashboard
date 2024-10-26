@@ -102,7 +102,9 @@ header button.rounded-circle:hover svg{
 .searchBox{
   width: 400px;
   height: 40px;
-  background: #e3efff;
+  background: #fff;
+  border: 1px solid #000 !important;
+  /* background: #e3efff; */
   border-radius: 6px;
   padding: 3px 15px;
 }
@@ -701,19 +703,22 @@ table tbody .custom-td-product{
   display: grid !important;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
   gap: 16px !important; 
+  /* padding-left: 10px ;
+  padding-right: 10px ; */
+  padding: 16px;
 }
 
 .product {
   display: flex !important;
   flex-direction: column !important;
   justify-content: space-between !important;
-  border: 1px solid #ddd !important;
+  border: 1px solid #000 !important;
   border-radius: 4px !important;
   padding: 16px !important;
   padding-bottom: 5px !important;
   text-align: center !important;
   box-sizing: border-box !important;
-  background: #fff !important;
+  background: rgba(61, 61, 61, 0.1) !important;
   text-decoration: none; 
 }
 
@@ -800,20 +805,38 @@ table tbody .custom-td-product{
 }
 
 .productDetailsSection .productInfo .icon{
-  width: 18%;
-  flex: 0 0 18%;
+  width: 30%;
+  flex: 0 0 30%;
 }
 
 .productDetailsSection .productInfo .icon svg{
-  font-size: 30px;
+  font-size: 50px !important;
 }
 
 .productDetailsSection .productInfo .name{
-  width: 82%;
-  flex: 0 0 82%;
+  width: 70%;
+  flex: 0 0 70%;
   margin-left: 10px;
 }
 
 .productDetailsSection .productInfo .name-detail{
-  width: 190px !important;
+  width: 150px !important;
 }
+
+.product-search {
+  display: flex;
+  gap: 1rem; /* Khoảng cách giữa các phần tử */
+  padding: 16px;
+}
+
+/* .genreWrapper{
+  
+  background: #fff;
+  border-radius: 5px;
+} */
+
+.product-box{
+  background: #fff;
+  border-radius: 10px;
+}
+

@@ -47,7 +47,7 @@ const Header = () => {
                 <div className='container-fluid w-100'>
                     <div className='row d-flex align-items-center '>
                         <div className='col-2'>
-                            <Link to={'/'} className='d-flex align-items-center logo'>
+                            <Link to={'/Dashboard'} className='d-flex align-items-center logo'>
                                 <img src={logo} alt='bookstore_logo'/>
                                 <span className="ms-2">BOOKSTORE</span>
                             </Link>

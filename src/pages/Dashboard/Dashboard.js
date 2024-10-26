@@ -21,6 +21,7 @@ import Select from '@mui/material/Select';
 import { MyContext } from '../../App';
 // import { Link } from 'react-router-dom';
 import DashboardProductTable from './components/dashboardProductTable';
+import GenreSelect from './components/GenreSelect';
 
 
 const Dashboard = () => {
@@ -32,7 +33,7 @@ const Dashboard = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 
-    const [brandBy, setbrandBy] = React.useState('');
+    // const [brandBy, setbrandBy] = React.useState('');
     const [showBy, setshowBy] = React.useState('');
     const [typeBy, settypeBy] = React.useState('');
 
@@ -51,9 +52,9 @@ const Dashboard = () => {
     const handleShowChange = (event) => {
         setshowBy(event.target.value);
     };
-      const handleBrandChange = (event) => {
-        setbrandBy(event.target.value);
-    };
+    //   const handleBrandChange = (event) => {
+    //     setbrandBy(event.target.value);
+    // };
     const handleTypeChange = (event) => {
         settypeBy(event.target.value);
     };
@@ -151,22 +152,7 @@ const Dashboard = () => {
                         {/* Brand select */}
                         <div className='col-md-3'>
                             <h4>BRAND BY</h4>
-                            <FormControl size='small' className='w-100'>
-                                <Select
-                                    value={brandBy}
-                                    onChange={handleBrandChange}
-                                    displayEmpty
-                                    inputProps={{ 'aria-label': 'Without label' }}
-                                    className='w-100'
-                                    >
-                                    <MenuItem value="">
-                                        <em>None</em>
-                                    </MenuItem>
-                                    <MenuItem value={10}>Romance</MenuItem>
-                                    <MenuItem value={20}>Action</MenuItem>
-                                    <MenuItem value={30}>Sport</MenuItem>
-                                </Select>
-                            </FormControl>
+                            <GenreSelect/>
                         </div>
 
                         {/* Type select */}
