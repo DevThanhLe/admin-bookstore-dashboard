@@ -805,8 +805,8 @@ table tbody .custom-td-product{
 }
 
 .productDetailsSection .productInfo .icon{
-  width: 30%;
-  flex: 0 0 30%;
+  /* width: 30%; */
+  /* flex: 0 0 30%; */
 }
 
 .productDetailsSection .productInfo .icon svg{
@@ -814,8 +814,8 @@ table tbody .custom-td-product{
 }
 
 .productDetailsSection .productInfo .name{
-  width: 70%;
-  flex: 0 0 70%;
+  /* width: 70%; */
+  /* flex: 0 0 70%; */
   margin-left: 10px;
 }
 
@@ -826,7 +826,10 @@ table tbody .custom-td-product{
 .product-search {
   display: flex;
   gap: 1rem; /* Khoảng cách giữa các phần tử */
-  padding: 16px;
+  padding-top: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: 0px;
 }
 
 /* .genreWrapper{
@@ -840,3 +843,46 @@ table tbody .custom-td-product{
   border-radius: 10px;
 }
 
+.lastcontent{
+  /* width: 20px !important; */
+  padding: 0px !important;
+  justify-content: center !important; /* Căn giữa theo trục ngang */
+  align-items: center !important; /* Căn giữa theo trục dọc */
+}
+
+.lastcontent .buttonWrapper{
+  justify-content: center !important; /* Căn giữa theo trục ngang */
+  align-items: center !important; /* Căn giữa theo trục dọc */
+  padding-left: 20px;
+}
+
+.lastcontent .buttonWrapper .success{
+  background: rgba(26,159,83,0.3) !important;
+  margin-bottom: 10px;
+}
+
+.lastcontent .buttonWrapper .success svg{
+  font-size: 20px;
+}
+
+.lastcontent .buttonWrapper .error{
+  background: rgba(241,17,51,0.3) !important;
+}
+
+.lastcontent .buttonWrapper .error svg{
+  font-size: 20px;
+}
+
+.product-description {
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  text-align: justify; /* Căn đều văn bản */
+}
+
+.product-description.show-more {
+  max-height: 1000px; /* Hoặc một giá trị lớn hơn chiều cao tối đa của nội dung */
+}
+
+.product-description.show-less {
+  max-height: 3.6em; /* Chiều cao tối đa cho 3 dòng */
+}

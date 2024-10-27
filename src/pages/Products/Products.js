@@ -14,6 +14,9 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import Pagination from '@mui/material/Pagination';
+
+// import { fetchAllProducts } from '../../services/ProductService'
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
     const backgroundColor =
@@ -70,13 +73,35 @@ const ProductStructure = ({ id,name, price, originalPrice, reviews, rating, imag
 const Products = () => {
     const [order, setOrder] = React.useState('');
 
+    // const [listProduct, setListProduct] = useState([]);
+    // const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại bắt đầu từ 1
+    // const [totalPages, setTotalPages] = useState(1); // Tổng số trang mặc định
+
+    // // Hàm gọi API để lấy dữ liệu sản phẩm
+    // const getProducts = async (page) => {
+    //   // Giả sử fetchAllProducts(page) là hàm API của bạn
+    //   let res = await fetchAllProducts(page - 1); // page - 1 vì backend có thể dùng chỉ số trang từ 0
+    //   if (res && res.data && res.data.content) {
+    //     setListProduct(res.data.content);
+    //     setTotalPages(res.data.totalPages);
+    //   }
+    // };
+
+    // // Khi component load lần đầu tiên hoặc khi currentPage thay đổi
+    // useEffect(() => {
+    //   getProducts(currentPage);
+    // }, [currentPage]);
+
+    // const handleChangePage = (event, page) => {
+    //   setCurrentPage(page);
+    // };
+
     const handleChange = (event) => {
       setOrder(event.target.value);
     };
     return(
       
         <div className='right-content w-100'>
-
 
             <div className='card shadow border-0 w-100 flex-row p-4'>
                 <h5 className='mb-0'>Product Lists</h5>
@@ -86,9 +111,8 @@ const Products = () => {
                 </Breadcrumbs>
             </div>
 
-
             <div className='product-box'>
-              <div className='product-search pb-3 d-flex align-items-center'>
+              <div className='product-search d-flex align-items-center'>
                   <div className='searchProductWrapper'>
                     <Search />
                   </div>
@@ -134,6 +158,24 @@ const Products = () => {
                   />
                 ))}
               </div>
+
+              {/* Pagination */}
+              <div className="d-flex tableFooter pe-2 pt-2">
+                  <Pagination count={4} className='pagination' showFirstButton showLastButton/>
+              </div>
+
+              {/* Phân trang
+              <div className="d-flex tableFooter pe-2">
+                  <Pagination
+                    count={totalPages}
+                    page={currentPage}
+                    onChange={handleChangePage}
+                    className='pagination'
+                    showFirstButton
+                    showLastButton
+                  />
+              </div> */}
+
             </div>
 
         </div>
