@@ -52,6 +52,11 @@ h4{
   outline: none !important;
 }
 
+.selectCustomBorder{
+  border: 1px solid #000 !important;
+  border-radius: 6px !important;
+}
+
 header{
   width: 100%;
   height: 70px;
@@ -765,6 +770,7 @@ table tbody .custom-td-product{
 }
 
 .product-price .original-price {
+  /* text-decoration: line-through; */
   margin-right: 8px !important;
   color: #000 !important;
 }
@@ -773,17 +779,17 @@ table tbody .custom-td-product{
   padding-right: 10px;
 }
 
-.sliderSml .slick-slide .slide-item{
+/* .sliderSml .slick-slide .slide-item{
   border-radius: 7px !important;
   overflow: hidden;
-}
+} */
 
-.sliderSml{
+/* .sliderSml{
   width: 360px;
-}
+} */
 
 .sliderBig{
-  width: 350px;
+  width: 100%;
 }
 
 .sliderBig .slide-item{
@@ -792,17 +798,17 @@ table tbody .custom-td-product{
 }
 
 .sliderBig img {
-  width: 350px;
-  height: 470px;
+  width: 100%;
+  height: 530px;
 }
 
 .leftcontent{
   width: 430px;
 }
 
-.sliderSml *,.sliderBig *{
+/* .sliderSml *,.sliderBig *{
   transition: all 0.2s !important;
-}
+} */
 
 .productDetailsSection .productInfo .icon{
   /* width: 30%; */
@@ -844,16 +850,11 @@ table tbody .custom-td-product{
 }
 
 .lastcontent{
-  /* width: 20px !important; */
   padding: 0px !important;
-  justify-content: center !important; /* Căn giữa theo trục ngang */
-  align-items: center !important; /* Căn giữa theo trục dọc */
 }
 
 .lastcontent .buttonWrapper{
-  justify-content: center !important; /* Căn giữa theo trục ngang */
-  align-items: center !important; /* Căn giữa theo trục dọc */
-  padding-left: 20px;
+  padding-left: 10px;
 }
 
 .lastcontent .buttonWrapper .success{
@@ -885,4 +886,35 @@ table tbody .custom-td-product{
 
 .product-description.show-less {
   max-height: 3.6em; /* Chiều cao tối đa cho 3 dòng */
+}
+
+.form .form-group{
+  margin-bottom: 15px;
+}
+
+.form .form-group h6{
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.form .form-group textarea{
+  background: rgba(128, 128, 128, 0.15) !important;
+  width: 100%;
+  outline: none !important;
+  border: 1px solid rgba(0,0,0,0.1) !important;
+  height: 120px;
+  padding-left: 15px;
+  border-radius: 5px;
+  font-size: 15px;
+  padding-top: 15px;
+}
+.form .form-group input{
+  background: rgba(128, 128, 128, 0.15) !important;
+  width: 100%;
+  outline: none !important;
+  border: 1px solid rgba(0,0,0,0.1) !important;
+  height: 40px;
+  padding-left: 15px;
+  border-radius: 5px;
+  font-size: 14px;
 }

@@ -15,7 +15,8 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Pagination from '@mui/material/Pagination';
-
+// import { useState } from "react";
+// import { useEffect } from "react";
 // import { fetchAllProducts } from '../../services/ProductService'
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
@@ -113,13 +114,13 @@ const Products = () => {
 
             <div className='product-box'>
               <div className='product-search d-flex align-items-center'>
-                  <div className='searchProductWrapper'>
+                  <div className='searchProductWrapper pe-2'>
                     <Search />
                   </div>
                   <div className='col-md-3 genreWrapper'>
                     <GenreSelect/>
                   </div>
-                  <div className='order-select'>
+                  <div className='order-select p-0'>
                     <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
                       <InputLabel id="demo-multiple-checkbox-label">Order By</InputLabel>
                       <Select

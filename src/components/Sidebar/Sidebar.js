@@ -75,7 +75,7 @@ const Sidebar = () => {
                                 <div className='submenu'>
                                     <li><Link to="/Products">Product List</Link></li>
                                     <li><Link to="/Products/Details">Product View</Link></li>
-                                    <li><Link to="#">Product Upload</Link></li>
+                                    <li><Link to="/Products/Upload">Product Upload</Link></li>
                                 </div>
                             </div>
                         </div>

@@ -73,6 +73,10 @@ const OrderTable = () => {
 
     const handleSave = () => {
         // Save the changes here, you might need to update the state or make an API call
+        // console.log("Saved Data:", current);  // log ra dữ liệu đã chỉnh sửa
+        const { userId, orderItems, orderId, ...dataToSave } = current; // loại bỏ orderItems và orderId
+
+        console.log("Saved Data:", dataToSave); // log ra dữ liệu đã chỉnh sửa
         setOpen(false);
     };
 
@@ -115,7 +119,7 @@ const OrderTable = () => {
                                     {/* <Link to={`/Products/Details/${product.id}`}> */}
                                         <Button className="secondary" color="secondary"><FaEye /></Button>
                                     {/* </Link> */}
-                                    <Button className="success" color="success" onClick={() => handleClickOpen(order)} ><FaPencil /></Button>
+                                    <Button className="success" color="success" onClick={() => handleClickOpen(order)} aria-hidden="false" ><FaPencil /></Button>
                                     <Button className="error" color="error"><IoTrashBin /></Button>
                                 </div>
                             </td>

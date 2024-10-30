@@ -11,6 +11,8 @@ import { Breadcrumbs } from '@mui/material';
 import { emphasize, styled } from '@mui/material/styles';
 import Chip from '@mui/material/Chip';
 import OrderTable from './components/OrderTable';
+import {TextField} from '@mui/material';
+import Search from '../../components/Search/Search';
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
     const backgroundColor =
@@ -47,6 +49,19 @@ const Orders = () => {
             <div className='card shadow border-0 p-3 mt-4'>
 
                 {/* table product data */}
+                <div className='row cardFilters d-flex align-items-center'>
+                  <div className='col-md-3'>
+                      <h4>SEARCH</h4>
+                      <div className='searchProductWrapper d-flex align-items-center'>
+                        <Search />
+                      </div>
+                  </div>
+      
+                  <div className='col-md-3'>
+                    <h4>ORDER DATE</h4>
+                    <TextField size='small' className='w-100 selectCustomBorder' type="date" fullWidth/>
+                  </div>
+                </div>
                 <OrderTable/>
             </div>
         </div>

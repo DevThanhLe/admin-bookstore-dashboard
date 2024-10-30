@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 import Description from './components/Description';
 import { BiSolidCategory } from "react-icons/bi";
 import { IoPricetagsSharp } from "react-icons/io5";
+import { MdClass } from "react-icons/md";
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
   const backgroundColor =
@@ -37,7 +38,7 @@ const ProductDetails = () => {
   const data = {
     bookId: 19,
     title: "Harry Potter",
-    price: 110,
+    price: 110100,
     quantity: 100,
     typeBookId: 3,
     image: "https://cdn0.fahasa.com/media/catalog/product/h/a/harry_potter_and_the_philosophers_stone_1_2018_11_20_07_17_17.jpg?_gl=1*18dm32t*_gcl_aw*R0NMLjE3MjU3OTA4NTQuQ2owS0NRandsdlcyQmhEeUFSSXNBRG5JZS1JN0FnZDFOMHZhZkpEWlhLeUhsRnd2aXdEd0R0T0ZReWZvOWFIbHozZmsyOHB6UTVmT3F3WWFBaWxjRUFMd193Y0I.*_gcl_au*MTcwNTIzOTU3Ny4xNzI1NzkwODQ4*_ga*MTYwMDc1MzIzOS4xNzI1NzkwODQ4*_ga_460L9JMC2G*MTczMDAxNzI4NC42LjEuMTczMDAxNzMwMy40MS4wLjE5NjM0NzgwMDI.",
@@ -56,18 +57,32 @@ const ProductDetails = () => {
     arrows: false,
   };
 
-  const productSliderSmlOptions = {
-    dots: false,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    arrows: false,
+  // const productSliderSmlOptions = {
+  //   dots: false,
+  //   infinite: false,
+  //   speed: 500,
+  //   slidesToShow: 4,
+  //   slidesToScroll: 1,
+  //   arrows: false,
+  // };
+
+  // Xác định kiểu sách dựa vào typeBookId
+  const bookType = (typeBookId) => {
+    switch (typeBookId) {
+      case 1:
+        return "Nbook";
+      case 2:
+        return "Ebook";
+      case 3:
+        return "Nbook and Ebook";
+      default:
+        return "Unknown";
+    }
   };
 
   return (
     <div>
-      <div className='right-content w-100'>
+      <div className='right-content w-100'  >
         <div className='card shadow border-0 w-100 flex-row p-4'>
           <h5 className='mb-0'>Product View</h5>
           <Breadcrumbs aria-label='breadcrumb' className='ms-auto breadcrumb_'>
@@ -78,10 +93,10 @@ const ProductDetails = () => {
         </div>
 
         <div className='card productDetailsSection'>
-          <div className='row w-100 m-0'>
+          <div className='row w-100 m-0 d-flex justify-content-between'>
             {/* Slide product img */}
             <div className='leftcontent col-md-5'>
-              <div className='sliderWrapper pt-3 pb-3 ps-4 pe-4'>
+              <div className='sliderWrapper pt-3 pb-3 ps-4'>
                 <h6 className='mb-4'>Product Gallery</h6>
                 {/* main img  */}
                 <Slider {...productSliderOptions} className='sliderBig mb-2'>
@@ -90,7 +105,7 @@ const ProductDetails = () => {
                   </div>
                 </Slider>
                 {/* support img  */}
-                <Slider {...productSliderSmlOptions} className='sliderSml'>
+                {/* <Slider {...productSliderSmlOptions} className='sliderSml'>
                   <div className='slide-item'>
                     <img src={data.image} className='w-100' alt='product item'></img>
                   </div>
@@ -103,7 +118,7 @@ const ProductDetails = () => {
                   <div className='slide-item'>
                     <img src={data.image} className='w-100' alt='product item'></img>
                   </div>
-                </Slider>
+                </Slider> */}
               </div>
             </div>
 
@@ -156,6 +171,19 @@ const ProductDetails = () => {
 
                   </div>
 
+                  {/* Book type  */}
+                  <div className='row pb-3'>
+
+                    <div className='name-detail col-sm-5 d-flex align-items-center'>
+                      <MdClass className='icon' />
+                      <span className='name fw-bold'>Type</span>
+                    </div>
+
+                    <div className='col-sm-7'>
+                      <span className='name'>{bookType(data.typeBookId)}</span>
+                    </div>
+                  </div>
+
                   {/* Price */}
                   <div className='row pb-3'>
 
@@ -165,19 +193,20 @@ const ProductDetails = () => {
                     </div>
 
                     <div className='col-sm-7'>
-                      <span className='name'>{data.price} VND</span>
+                      <span className='name'>{data.price.toLocaleString('vi-VN')} VND</span>
                     </div>
 
                   </div>
 
                   {/* Description */}
-                  <div className='row pb-3'>
+                  <div className='row'>
                     <div className='name-detail col-sm-5 d-flex align-items-center'>
                       <MdDescription className='icon' />
                       <span className='name fw-bold'>Description</span>
                     </div>
                     <Description text={data.description} charLimit={250} />
                   </div>
+
                 </div>
               </div>
             </div>
