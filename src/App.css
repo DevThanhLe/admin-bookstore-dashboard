@@ -435,11 +435,11 @@ header button.rounded-circle:hover svg{
   border-radius: 10px;
   overflow: hidden;
   padding: 15px;
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   justify-content: space-around;
   padding-bottom: 0%;
-  padding-top: 0%;
+  padding-top: 15px;
   text-align: left !important;
   position: relative;
   text-transform: capitalize !important;
@@ -449,7 +449,7 @@ header button.rounded-circle:hover svg{
 .dashboardBoxWrapper .dashboardBox .chartArrow{
   opacity: 0.1;
   position: absolute;
-  bottom: 20px;
+  bottom: -10px;
   left: 20px;
 }
 
@@ -917,4 +917,9 @@ table tbody .custom-td-product{
   padding-left: 15px;
   border-radius: 5px;
   font-size: 14px;
+}
+
+.genre-upload{
+  position: fixed !important;
+  width: 286px !important;
 }

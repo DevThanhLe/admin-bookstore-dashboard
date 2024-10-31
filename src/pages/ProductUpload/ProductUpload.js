@@ -55,18 +55,22 @@ const ProductUpload = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setImageFile(file);
-    setImagePreview(URL.createObjectURL(file));
+    if (file) {
+        setImageFile(file);
+        setImagePreview(URL.createObjectURL(file));
+    } else {
+        console.error('No valid file was selected.');
+    }
   };
 
-  const handleSubmit = () => {
-    const data = new FormData();
-    data.append('imageFile', imageFile);
-    // data.append('BookJson', JSON.stringify(formData));
+//   const handleSubmit = () => {
+//     const data = new FormData();
+//     data.append('imageFile', imageFile);
+//     // data.append('BookJson', JSON.stringify(formData));
 
-    // Thực hiện hành động upload ở đây, ví dụ như gửi request đến server
-    console.log("Data to be submitted:", data);
-  };
+//     // Thực hiện hành động upload ở đây, ví dụ như gửi request đến server
+//     console.log("Data to be submitted:", data);
+//   };
 
   const [typeOfBookVal, setTypeOfBookVal] = React.useState('');
 
@@ -112,14 +116,14 @@ const ProductUpload = () => {
                                 style={{ marginTop: '10px' }}
                             />
                             {imagePreview && (
-                                <img src={imagePreview} alt='Preview' style={{ marginTop: '10px', maxWidth: '100%', height: '500px' }} />
+                                <img src={imagePreview} alt='Preview' style={{ marginTop: '10px', maxWidth: '100%', height: '605px' }} />
                             )}
                         </div>
                     </div>
                     {/* get data and post  */}
                     <div className='col-sm-7'>
 
-                        <div className='card p-4'>
+                        <div className='card ps-4 pe-4 pt-4'>
                             <h5 className='mb-4'>Basic Infomation</h5>
 
                             <div className='form-group'>
@@ -175,13 +179,14 @@ const ProductUpload = () => {
 
                                 <div className='col pb-2'>
                                     <h6>Genre</h6>
-                                    <GenreSelect/>
+                                    <GenreSelect className='genre-upload'/>
                                 </div>
                                 
                             </div>        
                             
-                            <div className='card p-2 mt-4'>
-                                <Button variant="contained" color="primary" onClick={handleSubmit}>
+                            <div className='card mt-4'>
+                                {/* <Button variant="contained" color="primary" onClick={handleSubmit}> */}
+                                <Button variant="contained" color="primary">
                                     Upload Product
                                 </Button>
                             </div> 

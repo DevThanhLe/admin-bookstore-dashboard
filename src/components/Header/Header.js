@@ -65,10 +65,10 @@ const Header = () => {
                         
                         <div className='col-8 d-flex align-items-center justify-content-end'>
                             <div className='dropdownwrapper position-relative'>
-                                <Button className='rounded-circle me-3' onClick={handleOpenNotifications}><IoMdNotifications/></Button>
+                                {/* <Button className='rounded-circle me-3' onClick={handleOpenNotifications}><IoMdNotifications/></Button> */}
 
                             {/* Notifications menu */}
-                                <Menu
+                                {/* <Menu
                                     anchorEl={isOpenNotificationDrop}
                                     className='notifications dropdown_list'
                                     id='notifications'
@@ -105,7 +105,8 @@ const Header = () => {
                                         Logout
                                     </MenuItem>
                                 </Menu>
-                            </div>
+                            */}
+                            </div> 
 
                             <div className='myAccWrapper d-flex align-items-center'>
                                 <Button className='myAcc d-flex align-items-center' onClick={handleClick}>

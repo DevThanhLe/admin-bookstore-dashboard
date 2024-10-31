@@ -3,13 +3,14 @@ import Button from '@mui/material/Button';
 import { MdSpaceDashboard } from "react-icons/md";
 import { FaAngleRight } from "react-icons/fa6";
 import { MdOutlineProductionQuantityLimits } from "react-icons/md";
-import { IoCart } from "react-icons/io5";
+// import { IoCart } from "react-icons/io5";
 import { FaUsers } from "react-icons/fa";
 import { FaChartLine } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 import { IoMdLogOut } from "react-icons/io";
 // import { useContext } from 'react';
 // import { MyContext } from '../../App';
+import { PiNotepadFill } from "react-icons/pi";
 
 
 
@@ -25,8 +26,6 @@ const Sidebar = () => {
     }
 
     // const context = useContext(MyContext)
-
-
 
     return(
         <div>
@@ -84,7 +83,7 @@ const Sidebar = () => {
                         <Link to="/Orders">
                             <Button className='w-100 d-flex justify-content-start align-items-center'>
                                 <span className='icon'>
-                                    <IoCart/>
+                                    <PiNotepadFill/>
                                 </span>
                                 Orders
                                 <span className='arrow'>

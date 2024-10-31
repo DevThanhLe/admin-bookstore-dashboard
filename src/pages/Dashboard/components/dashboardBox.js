@@ -1,31 +1,31 @@
 import React from 'react';
-import { BsThreeDotsVertical } from "react-icons/bs";
+// import { BsThreeDotsVertical } from "react-icons/bs";
 import Button from '@mui/material/Button'
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import { IoIosTimer } from "react-icons/io";
+// import Menu from '@mui/material/Menu';
+// import MenuItem from '@mui/material/MenuItem';
+// import { IoIosTimer } from "react-icons/io";
 
 const DashboardBox = (props) => {
 
     const content = props.content ? props.content : ''
     const totalNumber = props.totalNumber ? props.totalNumber : '0'
 
-    const ITEM_HEIGHT = 48
+    // const ITEM_HEIGHT = 48
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    // const [anchorEl, setAnchorEl] = React.useState(null);
+    // const open = Boolean(anchorEl);
+    // const handleClick = (event) => {
+    //     setAnchorEl(event.currentTarget);
+    // };
+    // const handleClose = () => {
+    //     setAnchorEl(null);
+    // };
 
 
     return(
-        <Button className='dashboardBox' style={{
+        <div className='dashboardBox' style={{
             backgroundImage: `linear-gradient(to right, ${props.color?.[0]}, ${props.color?.[1]})`
 
         }}>
@@ -55,7 +55,7 @@ const DashboardBox = (props) => {
                 </div>
             </div>
 
-            <div className='d-flex align-items-center w-100 bottomEle'>
+            {/* <div className='d-flex align-items-center w-100 bottomEle'>
                 <h6 className='text-white mb-0 mt-0'>Last month</h6>
                 <Button className='ms-auto toggleIcon' onClick={handleClick}>
                     <BsThreeDotsVertical/>
@@ -87,10 +87,10 @@ const DashboardBox = (props) => {
                     <MenuItem onClick={handleClose}>
                         <IoIosTimer className='me-2'/>Last Year
                     </MenuItem>
-                </Menu>
-            </div>
+                </Menu> */}
+            {/* </div> */}
 
-        </Button>
+        </div>
     )
 }
 

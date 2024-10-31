@@ -31,36 +31,36 @@ const GenreNames = [
 export default function GenreSelect() {
   const [genreName, setGenreName] = React.useState([]);
 
-    const handleChange = (event) => {
-        const {
-            target: { value },
-        } = event;
-        const selectedValues = typeof value === 'string' ? value.split(',') : value;
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    const selectedValues = typeof value === 'string' ? value.split(',') : value;
 
-        // Nếu không có mục nào được chọn, hiển thị "None"
-        setGenreName(selectedValues.length === 0 ? [] : selectedValues);
-    };
+    setGenreName(selectedValues.length === 0 ? [] : selectedValues);
+  };
 
   return (
     <div>
       <FormControl className='w-100'>
         <Select
-          className='w-100'
           displayEmpty
           labelId="demo-multiple-checkbox-label"
           id="demo-multiple-checkbox"
           multiple
           value={genreName}
           onChange={handleChange}
-          renderValue={(selected) => selected.length === 0 ? <em>None</em> : selected.join(', ')}
-          // displayEmpty
+          renderValue={(selected) =>
+            selected.length === 0 ? <em>None</em> : selected.join(', ')
+          }
           MenuProps={MenuProps}
-          // sx={{
-          //   '& .MuiOutlinedInput-notchedOutline': {
-          //     borderColor: '#000',
-          //   },
-          // }}
-          
+          sx={{
+            width: '100%',
+            maxWidth: 286,
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+          }}
         >
           {GenreNames.map((name) => (
             <MenuItem key={name} value={name}>
