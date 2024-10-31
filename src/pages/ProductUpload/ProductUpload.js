@@ -113,10 +113,10 @@ const ProductUpload = () => {
                                 accept='image/*'
                                 type='file'
                                 onChange={handleFileChange}
-                                style={{ marginTop: '10px' }}
+                                style={{ marginTop: '20px' }}
                             />
                             {imagePreview && (
-                                <img src={imagePreview} alt='Preview' style={{ marginTop: '10px', maxWidth: '100%', height: '605px' }} />
+                                <img src={imagePreview} alt='Preview' style={{ marginTop: '30px', maxWidth: '100%', height: '655px' }} />
                             )}
                         </div>
                     </div>
@@ -150,6 +150,11 @@ const ProductUpload = () => {
                                         }
                                     }}
                                 />
+                            </div>
+
+                            <div className='form-group'>
+                                <h6>Link Ebook</h6>
+                                <input type='text'/>
                             </div>
 
                             <div className='form-group'>
