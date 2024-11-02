@@ -1,8 +1,8 @@
 import axios from "./AxiosCustom";
 
-const LoginApi = (email, password) => {
-    return axios.post("api/auth/login", { 
-        email, 
+const LoginApi = (username, password) => {
+    return axios.post("api/Auth/login", { 
+        username, 
         password 
     });
 };

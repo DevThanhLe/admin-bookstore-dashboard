@@ -121,9 +121,70 @@ const Dashboard = () => {
 
 
                 </div>
-
+                
+                {/* Best Selling  */}
                 <div className='card shadow border-0 p-3 mt-4'>
                     <h3 className='hd'>Best Selling Products</h3>
+                    {/* select, filter product */}
+                    <div className='row cardFilters mt-3'>
+
+                        {/* show select */}
+                        <div className='col-md-3'>
+                            <h4>SHOW BY</h4>
+                            <FormControl size='small' className='w-100'>
+                                <Select
+                                    value={showBy}
+                                    onChange={handleShowChange}
+                                    displayEmpty
+                                    inputProps={{ 'aria-label': 'Without label' }}
+                                    labelId="demo-simple-select-helper-label"
+                                    className='w-100'
+                                    >
+                                    {/* <MenuItem value="">
+                                        <em>None</em>
+                                    </MenuItem> */}
+                                    <MenuItem value={5}>5 rows</MenuItem>
+                                    <MenuItem value={10}>10 rows</MenuItem>
+                                    {/* <MenuItem value={20}>20 rows</MenuItem> */}
+                                </Select>
+                            </FormControl>
+                        </div>
+
+                        {/* Brand select */}
+                        <div className='col-md-3'>
+                            <h4>CATEROGIES BY</h4>
+                            <GenreSelect/>
+                        </div>
+
+                        {/* Type select */}
+                    {/*     <div className='col-md-3'>
+                            <h4>TYPE BY</h4>
+                            <FormControl size='small' className='w-100'>
+                                <Select
+                                    value={typeBy}
+                                    onChange={handleTypeChange}
+                                    displayEmpty
+                                    inputProps={{ 'aria-label': 'Without label' }}
+                                    className='w-100'
+                                    >
+                                    <MenuItem value="">
+                                        <em>None</em>
+                                    </MenuItem>
+                                    <MenuItem value={10}>N-Book</MenuItem>
+                                    <MenuItem value={20}>E-Book</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </div> */}
+                    </div>
+
+                    {/* table product data */}
+                    <DashboardProductTable/>
+                </div>
+
+
+                {/* overstocked products  */}
+                <div className='card shadow border-0 p-3 mt-4'>
+                    <h3 className='hd'>Overstocked Products</h3>
                     {/* select, filter product */}
                     <div className='row cardFilters mt-3'>
 
@@ -144,19 +205,19 @@ const Dashboard = () => {
                                     </MenuItem>
                                     <MenuItem value={5}>5 rows</MenuItem>
                                     <MenuItem value={10}>10 rows</MenuItem>
-                                    <MenuItem value={20}>20 rows</MenuItem>
+                                    {/* <MenuItem value={20}>20 rows</MenuItem> */}
                                 </Select>
                             </FormControl>
                         </div>
 
                         {/* Brand select */}
                         <div className='col-md-3'>
-                            <h4>BRAND BY</h4>
+                            <h4>CATEROGIES BY</h4>
                             <GenreSelect/>
                         </div>
 
                         {/* Type select */}
-                        <div className='col-md-3'>
+                        {/* <div className='col-md-3'>
                             <h4>TYPE BY</h4>
                             <FormControl size='small' className='w-100'>
                                 <Select
@@ -173,7 +234,7 @@ const Dashboard = () => {
                                     <MenuItem value={20}>E-Book</MenuItem>
                                 </Select>
                             </FormControl>
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* table product data */}
