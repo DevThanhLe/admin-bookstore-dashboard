@@ -4,7 +4,7 @@ import { FaHome } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { emphasize, styled } from '@mui/material/styles';
 import Chip from '@mui/material/Chip';
-import productsData from './ProductData'
+// import productsData from './ProductData'
 // import Button from '@mui/material/Button'
 import { Link } from 'react-router-dom';
 import Search from '../../components/Search/Search';
@@ -17,7 +17,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Pagination from '@mui/material/Pagination';
 // import { useState } from "react";
 // import { useEffect } from "react";
-// import { fetchAllProducts } from '../../services/ProductService'
+import { fetchAllProducts } from '../../services/ProductService'
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
     const backgroundColor =
@@ -49,7 +49,8 @@ const formatCurrency = (value) => {
 };
 
 
-const ProductStructure = ({ id,name, price, originalPrice, reviews, rating, image }) => {
+// const ProductStructure = ({ id,name, price, originalPrice, reviews, rating, image }) => {
+const ProductStructure = ({ id, name, price, image }) => {
 
   // const roundedRating = Math.round(rating);
 
@@ -57,14 +58,14 @@ const ProductStructure = ({ id,name, price, originalPrice, reviews, rating, imag
     <Link className="product" to={`/Products/Details/${id}`}>
       <img src={image} alt={name} />
       <h2>{name}</h2>
-      <div className="product-rating">
-        {/* {'★'.repeat(roundedRating)}{'☆'.repeat(5 - roundedRating)} */}
+      {/* <div className="product-rating">
+        {'★'.repeat(roundedRating)}{'☆'.repeat(5 - roundedRating)}
         {rating} ★
         <span>({reviews} reviews)</span>
-      </div>
+      </div> */}
       <p className="product-price">
         {/* <span className="original-price">${originalPrice}</span> ${price} */}
-        <span className="original-price">{formatCurrency(originalPrice)}</span>
+        <span className="original-price">{formatCurrency(price)}</span>
       </p>
     </Link>
   );
@@ -74,32 +75,39 @@ const ProductStructure = ({ id,name, price, originalPrice, reviews, rating, imag
 const Products = () => {
     const [order, setOrder] = React.useState('');
 
-    // const [listProduct, setListProduct] = useState([]);
-    // const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại bắt đầu từ 1
-    // const [totalPages, setTotalPages] = useState(1); // Tổng số trang mặc định
+    const [productsData, setProductsData] = React.useState([]);
+    const [currentPage, setCurrentPage] = React.useState(1); // Trang hiện tại bắt đầu từ 1
+    const [totalPages, setTotalPages] = React.useState(1); // Tổng số trang mặc định
 
-    // // Hàm gọi API để lấy dữ liệu sản phẩm
-    // const getProducts = async (page) => {
-    //   // Giả sử fetchAllProducts(page) là hàm API của bạn
-    //   let res = await fetchAllProducts(page - 1); // page - 1 vì backend có thể dùng chỉ số trang từ 0
-    //   if (res && res.data && res.data.content) {
-    //     setListProduct(res.data.content);
-    //     setTotalPages(res.data.totalPages);
-    //   }
-    // };
+    // Hàm gọi API để lấy dữ liệu sản phẩm
+    const getProducts = async (page) => {
+      
+      let res = await fetchAllProducts(page);
+      if (res) {
+        // pull về thì sửa gỡ command .items 
+        // setProductsData(res.data.items);
+        // setTotalPages(res.data.totalPages);
 
-    // // Khi component load lần đầu tiên hoặc khi currentPage thay đổi
-    // useEffect(() => {
-    //   getProducts(currentPage);
-    // }, [currentPage]);
 
-    // const handleChangePage = (event, page) => {
-    //   setCurrentPage(page);
-    // };
+        setProductsData(res.data);
+        setTotalPages(5);
+        // console.log(res.data);
+      }
+    };
+
+    // Gọi API fetchProduct
+    React.useEffect(() => {
+      getProducts(currentPage);
+    }, [currentPage]);
+
+    const handleChangePage = (event, page) => {
+      setCurrentPage(page);
+    };
 
     const handleChange = (event) => {
       setOrder(event.target.value);
     };
+
     return(
       
         <div className='right-content w-100'>
@@ -145,12 +153,12 @@ const Products = () => {
                   </div>
               </div>
 
-              <div className="product-list">
+              {/* <div className="product-list">
                 {productsData.map(product => (
                   <ProductStructure
                     key={product.id}
                     id={product.id}
-                    name={product.name}
+                    name={product.title}
                     price={product.price}
                     originalPrice={product.originalPrice}
                     reviews={product.reviews}
@@ -158,14 +166,28 @@ const Products = () => {
                     image={product.image}
                   />
                 ))}
+              </div> */}
+              <div className="product-list">
+                {productsData.map(product => (
+                  <ProductStructure
+                    key={product.id}
+                    id={product.id}
+                    name={product.title}
+                    price={product.price}
+                    // originalPrice={product.originalPrice}
+                    // reviews={product.reviews}
+                    // rating={product.rating}
+                    image={product.image}
+                  />
+                ))}
               </div>
 
               {/* Pagination */}
-              <div className="d-flex tableFooter pe-2 pt-2">
+              {/* <div className="d-flex tableFooter pe-2 pt-2">
                   <Pagination count={4} className='pagination' showFirstButton showLastButton/>
-              </div>
+              </div> */}
 
-              {/* Phân trang
+              {/* Phân trang */}
               <div className="d-flex tableFooter pe-2">
                   <Pagination
                     count={totalPages}
@@ -175,7 +197,7 @@ const Products = () => {
                     showFirstButton
                     showLastButton
                   />
-              </div> */}
+              </div>
 
             </div>
 

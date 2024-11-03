@@ -51,6 +51,7 @@ const Login = () => {
             if (author === "Admin") 
             {
                 window.localStorage.setItem("token", res.data.token);
+                console.log(localStorage.getItem("token"));
                 navigate("/Dashboard");
                 toast.success("Login success");
             } 

@@ -16,7 +16,7 @@ import Revenue from './pages/Revenue/Revenue';
 
 
 const MyContext = createContext();
-window.localStorage.removeItem("token");
+// window.localStorage.removeItem("token");
 
 
 function App() {

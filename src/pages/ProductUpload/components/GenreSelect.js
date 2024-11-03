@@ -17,7 +17,7 @@ const MenuProps = {
   },
 };
 
-export default function GenreSelect() {
+export default function GenreSelect({ onGenreIdChange }) {
   const [genreName, setGenreName] = React.useState([]);
   const [fullBrands,setFullBrands] = React.useState([]);
   const [brands, setBrands] = React.useState([]); // State to hold the brand names
@@ -56,8 +56,10 @@ export default function GenreSelect() {
     }).filter(id => id !== null); // Lọc bỏ giá trị null
   
     // In ra console giá trị đã chọn và updatedGenreId
-    console.log("Selected Genres:", updatedGenreName);
-    console.log("Updated Genre Ids:", updatedGenreId); // Input cho các lệnh API
+    // console.log("Selected Genres:", updatedGenreName);
+    // console.log("Updated Genre Ids:", updatedGenreId); // Input cho các lệnh API
+
+    onGenreIdChange(updatedGenreId)
   };
 
   return (
