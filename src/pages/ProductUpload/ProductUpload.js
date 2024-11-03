@@ -33,15 +33,17 @@ const StyledBreadcrumb = styled(Chip)(({ theme }) => {
 
 const ProductUpload = () => {
 //   tạo form 
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     title: '',
     brandId: [],
     price: 0,
     quantity: 0,
     Description: '',
     typeBookId: 0,
-    author_name: ''
-  });
+    authorName: ''
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
 
 //   const [submittedData, setSubmittedData] = useState(null); // State để lưu trữ dữ liệu đã submit
 
@@ -49,11 +51,12 @@ const ProductUpload = () => {
   const [imagePreview, setImagePreview] = useState(null);
 
   const [stock, setStock] = useState(0);
+  const [resetGenres, setResetGenres] = useState(false); // State để reset genre
 
   // Điều kiện form
   const validateForm = () => {
     // Kiểm tra các trường bắt buộc
-    if (!formData.title || !formData.author_name || !formData.Description) {
+    if (!formData.title || !formData.authorName || !formData.Description) {
       toast.error("All fields are required");
       return false;
     }
@@ -128,8 +131,16 @@ const ProductUpload = () => {
 
     // Tạo FormData
     const data = new FormData();
-    data.append('imageFile', imageFile);
-    data.append('BookJson', JSON.stringify(updatedFormData));
+    data.append('ImageFile', imageFile);
+    data.append('Title', formData.title);
+    formData.brandId.forEach((id, index) => {
+      data.append(`BrandId[${index}]`, id);
+    });
+    data.append('Price', formData.price);
+    data.append('Quantity', stock);
+    data.append('Description', formData.Description);
+    data.append('TypeBookId', formData.typeBookId);
+    data.append('AuthorName', formData.authorName);
 
     // Thực hiện hành động upload ở đây, ví dụ như gửi request đến server
     // console.log("Data to be submitted:");
@@ -139,8 +150,15 @@ const ProductUpload = () => {
 
     //Gọi API post book
     let res = await createProduct(data);
+    setResetGenres(true);
     if (res) {
       toast.success("Adding product is succeed!");
+      // Reset form fields
+      setFormData(initialFormData);
+      setImageFile(null);
+      setImagePreview(null);
+      setStock(0);
+      setTimeout(() => setResetGenres(false), 0);
     } 
     else 
     {
@@ -210,7 +228,7 @@ const ProductUpload = () => {
                 {/* Author name  */}
                 <div className='form-group'>
                   <h6>Author</h6>
-                  <input type='text' name='author_name' value={formData.author_name} onChange={handleInputChange} />
+                  <input type='text' name='authorName' value={formData.authorName} onChange={handleInputChange} />
                 </div>
 
                 {/* Price  */}
@@ -236,10 +254,10 @@ const ProductUpload = () => {
                 </div>
                 
                 {/* Link ebook  */}
-                <div className='form-group'>
+                {/* <div className='form-group'>
                   <h6>Link Ebook</h6>
                   <input type='text' />
-                </div>
+                </div> */}
                 
                 {/* Description  */}
                 <div className='form-group'>
@@ -269,13 +287,13 @@ const ProductUpload = () => {
                       </MenuItem>
                       <MenuItem value={1}>Nbook</MenuItem>
                       <MenuItem value={2}>Ebook</MenuItem>
-                      <MenuItem value={3}>Nbook and Ebook</MenuItem>
+                      {/* <MenuItem value={3}>Nbook and Ebook</MenuItem> */}
                     </Select>
                   </div>
 
                   <div className='col pb-2'>
                     <h6>Genre</h6>
-                    <GenreSelect className='genre-upload' onGenreIdChange={handleGenreIdChange} />
+                    <GenreSelect className='genre-upload' onGenreIdChange={handleGenreIdChange} resetGenres={resetGenres}/>
                   </div>
 
                 </div>

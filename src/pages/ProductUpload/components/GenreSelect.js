@@ -17,7 +17,7 @@ const MenuProps = {
   },
 };
 
-export default function GenreSelect({ onGenreIdChange }) {
+export default function GenreSelect({ onGenreIdChange, resetGenres }) {
   const [genreName, setGenreName] = React.useState([]);
   const [fullBrands,setFullBrands] = React.useState([]);
   const [brands, setBrands] = React.useState([]); // State to hold the brand names
@@ -38,6 +38,14 @@ export default function GenreSelect({ onGenreIdChange }) {
 
     getBrands();
   }, []);
+
+    // Hàm để reset genreName
+    React.useEffect(() => {
+      if (resetGenres) {
+        setGenreName([]);
+        onGenreIdChange([]); // Gọi lại hàm để thông báo về danh sách genreId đã cập nhật
+      }
+    }, [resetGenres, onGenreIdChange]);
 
   const handleChange = (event) => {
     const {

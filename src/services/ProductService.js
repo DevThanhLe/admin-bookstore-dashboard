@@ -1,7 +1,7 @@
 import axios from "./AxiosCustom";
 
 const token = localStorage.getItem("token");
-console.log(token);
+// console.log(token);
 
 // Lấy toàn bộ sản phẩm
 const fetchAllProducts = (page) => {
@@ -9,7 +9,7 @@ const fetchAllProducts = (page) => {
 //     `api/Book?pageNumber=${page}&pageSize=10`
 //   );
 // };
-  return axios.get(`api/Book?pageNumber=${page}&pageSize=10`, {
+  return axios.get(`api/Book?pageNumber=${page}&pageSize=15`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -17,6 +17,12 @@ const fetchAllProducts = (page) => {
 };
 export { fetchAllProducts };
 
+const searchProducts = (input,page) => {
+    return axios.get(
+      `api/Book/search?name=${input}&pageNumber=${page}&pageSize=15`
+    );
+};
+export { searchProducts };
 
 // //Lấy sản phẩm bán chạy
 // const fetchBestSeller = () => {

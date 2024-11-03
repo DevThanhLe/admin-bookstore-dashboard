@@ -85,12 +85,12 @@ const Products = () => {
       let res = await fetchAllProducts(page);
       if (res) {
         // pull về thì sửa gỡ command .items 
-        // setProductsData(res.data.items);
-        // setTotalPages(res.data.totalPages);
+        setProductsData(res.data.items);
+        setTotalPages(res.data.totalPages);
 
 
-        setProductsData(res.data);
-        setTotalPages(5);
+        // setProductsData(res.data);
+        // setTotalPages(5);
         // console.log(res.data);
       }
     };
