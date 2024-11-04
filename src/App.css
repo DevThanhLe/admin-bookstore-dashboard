@@ -614,6 +614,7 @@ header button.rounded-circle:hover svg{
   color: #403e57;
 }
 
+
 .table-responsive::-webkit-scrollbar-thumb{
   background: #ccc !important;
 }
@@ -673,22 +674,100 @@ table td .info h6{
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-size: 13px;  
+  font-weight: 500;
+  margin-bottom: 5px;
+  margin-top: 2px;
+}
+
+table td .info-phone h6{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;  
+  font-weight: 500;
+  margin-bottom: 5px;
+  margin-top: 2px;
+}
+
+table td .info-address h6{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;  
+  font-weight: 500;
+  margin-bottom: 5px;
+  margin-top: 2px;
+}
+
+/* .custom-ol-hidden{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 14px;
   font-weight: 500;
   margin-bottom: 5px;
-}
+} */
 
 table.v-align td .productBox{
-  width: 90%;
+  width: 100%;
 }
 
 table.v-align td .productBox .info{
-  width: 100%;
+  width: 280px;
 }
+
+table.v-align td .userBox{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+table.v-align td .userBox .info{
+  width: 200px;
+}
+
+table tbody .custom-td-user{
+  width: 250px;
+}
+
+table.v-align td .userPhoneBox{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+table.v-align td .userPhoneBox .info-phone{
+  width: 100px;
+}
+
+table tbody .custom-td-userPhone{
+  width: 150px;
+}
+/* ============================== */
+table.v-align td .userAddressBox{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+table.v-align td .userAddressBox .info-address{
+  width: 420px;
+}
+
+table tbody .custom-td-userAddress{
+  width: 600px;
+}
+/* ================================ */  
 
 table tbody .custom-td-product{
   width: 350px;
 }
+
+
 .tableFooter{
   padding-bottom: 20px;
 }

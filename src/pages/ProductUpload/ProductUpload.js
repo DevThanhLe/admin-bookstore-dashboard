@@ -32,6 +32,7 @@ const StyledBreadcrumb = styled(Chip)(({ theme }) => {
 });
 
 const ProductUpload = () => {
+  // const token = localStorage.getItem("token");
 //   tạo form 
   const initialFormData = {
     title: '',
@@ -49,6 +50,9 @@ const ProductUpload = () => {
 
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+
+  const [bookFile, setBookFile] = useState(null);
+
 
   const [stock, setStock] = useState(0);
   const [resetGenres, setResetGenres] = useState(false); // State để reset genre
@@ -81,8 +85,8 @@ const ProductUpload = () => {
       return false;
     }
 
-    if (formData.typeBookId !== 1 && !formData.linkEbook) {
-      toast.error("Link Ebook is required for Ebook type");
+    if (formData.typeBookId !== 1 && !bookFile) {
+      toast.error("Ebook file is required for Ebook type");
       return false;
     }
 
@@ -105,6 +109,20 @@ const ProductUpload = () => {
     } else {
       console.error('No valid file was selected.');
     }
+  };
+
+  const handleFileBookChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setBookFile(file);
+      // setImagePreview(URL.createObjectURL(file));
+    } else {
+      console.error('No valid file was selected.');
+    }
+
+    // if(bookFile === null){
+    //   e.target.value = null;
+    // }
   };
 
   // Callback function để nhận updatedGenreId từ GenreSelect
@@ -131,7 +149,20 @@ const ProductUpload = () => {
 
     // Tạo FormData
     const data = new FormData();
-    data.append('ImageFile', imageFile);
+    // if (imageFile) {
+    data.append('ImageFile', imageFile);  
+    // } else {
+    //   toast.error("Please upload an image");
+    //   return;
+    // }
+  
+    // Append book file if it exists
+    // if (bookFile) {
+      data.append('EbookFile', bookFile);
+    // } else {
+    //   toast.error("Please upload a book file");
+    //   return;
+    // }
     data.append('Title', formData.title);
     formData.brandId.forEach((id, index) => {
       data.append(`BrandId[${index}]`, id);
@@ -156,6 +187,7 @@ const ProductUpload = () => {
       // Reset form fields
       setFormData(initialFormData);
       setImageFile(null);
+      setBookFile(null);
       setImagePreview(null);
       setStock(0);
       setTimeout(() => setResetGenres(false), 0);
@@ -201,8 +233,9 @@ const ProductUpload = () => {
           <div className='row'>
             {/* display img uploaded */}
             <div className='col-sm-5'>
+
               <div className='card p-4'>
-                <h5 className='mb-2'>Upload Image</h5>
+                <h5 className='mb-0'>Upload Image</h5>
                 <input
                   accept='image/*'
                   type='file'
@@ -210,9 +243,21 @@ const ProductUpload = () => {
                   style={{ marginTop: '20px' }}
                 />
                 {imagePreview && (
-                  <img src={imagePreview} alt='Preview' style={{ marginTop: '30px', maxWidth: '100%', height: '655px' }} />
+                  <img src={imagePreview} alt='Preview' style={{ marginTop: '20px', maxWidth: '100%', height: '450px' }} />
                 )}
               </div>
+
+              <div className='card p-4'>
+                <h5 className='mb-0'>Upload Book</h5>
+                <input
+                  accept='.pdf, .doc, .docx, .txt'
+                  type='file'
+                  onChange={handleFileBookChange}
+                  style={{ marginTop: '20px' }}
+                  disabled={formData.typeBookId !== 2}
+                />
+              </div>
+
             </div>
             {/* get data and post  */}
             <div className='col-sm-7'>

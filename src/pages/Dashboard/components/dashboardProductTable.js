@@ -9,7 +9,7 @@ import Pagination from '@mui/material/Pagination';
 const productsData = [
     {
         id: 1,
-        name: "Sống để kể lại những anh hùng",
+        name: "Sống để kể lại những anh hùngaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa LMAOAOAOAOÔAOO",
         brand: "History",
         type: "N-Book",
         price: "250,000",

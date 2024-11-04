@@ -1,10 +1,10 @@
 import axios from "./AxiosCustom";
 
-const token = localStorage.getItem("token");
+// const token = localStorage.getItem("token");
 // console.log(token);
 
 // Lấy toàn bộ sản phẩm
-const fetchAllProducts = (page) => {
+const fetchAllProducts = (page,token) => {
 //   return axios.get(
 //     `api/Book?pageNumber=${page}&pageSize=10`
 //   );
@@ -17,12 +17,12 @@ const fetchAllProducts = (page) => {
 };
 export { fetchAllProducts };
 
-const searchProducts = (input,page) => {
-    return axios.get(
-      `api/Book/search?name=${input}&pageNumber=${page}&pageSize=15`
-    );
-};
-export { searchProducts };
+// const searchProducts = (input,page) => {
+//     return axios.get(
+//       `api/Book/search?name=${input}&pageNumber=${page}&pageSize=15`
+//     );
+// };
+// export { searchProducts };
 
 // //Lấy sản phẩm bán chạy
 // const fetchBestSeller = () => {
@@ -45,11 +45,11 @@ const createProduct = (product) => {
 };
 export { createProduct };
 
-// //Lấy sản phẩm theo id
-// const getProductById = (id) => {
-//   return axios.get(`api/products/${id}`);
-// };
-// export { getProductById };
+//Lấy sản phẩm theo id
+const getProductById = (id) => {
+  return axios.get(`api/Book/${id}`);
+};
+export { getProductById };
 
 // //Chỉnh sửa thông tin sản phẩm
 // const updateProduct = (id, product) => {
