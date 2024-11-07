@@ -17,12 +17,16 @@ const fetchAllProducts = (page,token) => {
 };
 export { fetchAllProducts };
 
-// const searchProducts = (input,page) => {
-//     return axios.get(
-//       `api/Book/search?name=${input}&pageNumber=${page}&pageSize=15`
-//     );
-// };
-// export { searchProducts };
+// Search sản phẩm
+const searchProducts = (brandId,inputName,page) => {
+
+    const idParams = brandId.map(id => `id=${id}`).join('&');
+
+    return axios.get(
+      `api/Book/search-all?${idParams}&name=${inputName}&pageNumber=${page}&pageSize=15`
+    );
+};
+export { searchProducts };
 
 // //Lấy sản phẩm bán chạy
 // const fetchBestSeller = () => {
@@ -32,7 +36,7 @@ export { fetchAllProducts };
 //     },
 //   });
 // };
-// export { fetchBestSeller };
+// export { fetchBestSeller };  
 
 //Tạo sản phẩm
 const createProduct = (product) => {
@@ -50,6 +54,11 @@ const getProductById = (id) => {
   return axios.get(`api/Book/${id}`);
 };
 export { getProductById };
+
+// Search Sản phẩm
+// const searchAllProduct = (brandId,nameInput) => {
+//   return axios.get
+// }
 
 // //Chỉnh sửa thông tin sản phẩm
 // const updateProduct = (id, product) => {

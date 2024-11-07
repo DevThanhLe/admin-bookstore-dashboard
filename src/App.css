@@ -1056,3 +1056,16 @@ table tbody .custom-td-product{
   position: fixed !important;
   width: 286px !important;
 }
+
+/* .edit-book-col1{
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-book-col2{
+  width: 48%;
+} */
+
+.edit-book{
+  display: flex;
+}

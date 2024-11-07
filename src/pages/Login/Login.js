@@ -48,7 +48,7 @@ const Login = () => {
             const author = res.data.role;
             // console.log(author)
             
-            if (author === "Admin") 
+            if (author === "Admin" || author === "admin" || author === "ADMIN") 
             {
                 window.localStorage.setItem("token", res.data.token);
                 console.log(localStorage.getItem("token"));

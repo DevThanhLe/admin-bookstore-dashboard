@@ -18,6 +18,7 @@
   // import { useState } from "react";
   // import { useEffect } from "react";
   import { fetchAllProducts } from '../../services/ProductService'
+  import { searchProducts } from '../../services/ProductService';
 
   const StyledBreadcrumb = styled(Chip)(({ theme }) => {
       const backgroundColor =
@@ -81,6 +82,10 @@
       const [currentPage, setCurrentPage] = React.useState(1); // Trang hiện tại bắt đầu từ 1
       const [totalPages, setTotalPages] = React.useState(1); // Tổng số trang mặc định
 
+      // Dùng cho search và lọc
+      const [brandIdList, setBrandIdList] = React.useState([]);
+      const [searchInput, setSearchInput] = React.useState('');
+
       // Hàm gọi API để lấy dữ liệu sản phẩm
       const getProducts = async (page,token) => {
         
@@ -100,7 +105,35 @@
       // Gọi API fetchProduct
       React.useEffect(() => {
         getProducts(currentPage,token);
-      }, [currentPage,token]);
+        // console.log("Updated brandIdList:", brandIdList);
+        // console.log("Search Input:", searchInput);
+
+      // }, [currentPage,token,searchInput,brandIdList]);
+      }, [currentPage,token]);  
+    // }, [currentPage,token,searchInput]);
+    // }, [currentPage,token,brandIdList]);
+
+    React.useEffect(() => {
+      const fetchFilteredProducts = async () => {
+        if (searchInput === '' && brandIdList.length === 0) {
+            // If both search and brandIdList are empty, call getProducts
+            getProducts(currentPage, token);
+        } else {
+            // Else, call searchProducts with current search and filter values
+            try {
+                const res = await searchProducts(brandIdList, searchInput, currentPage);
+                if (res) {
+                    setProductsData(res.data.items);
+                    setTotalPages(res.data.totalPages);
+                }
+            } catch (error) {
+                console.error("Failed to fetch filtered products", error);
+            }
+        }
+    };
+
+      fetchFilteredProducts();
+  }, [searchInput, brandIdList, currentPage, token]);
 
       const handleChangePage = (event, page) => {
         setCurrentPage(page);
@@ -108,6 +141,16 @@
 
       const handleChange = (event) => {
         setOrder(event.target.value);
+      };
+
+      const handleGenreIdChange = (updatedGenreId) => {
+        setBrandIdList(updatedGenreId);
+        // console.log(brandIdList);
+      };
+
+      const handleSearchInput = (searchTerm) => {
+        setSearchInput(searchTerm)
+        // console.log(searchTerm); // Xử lý giá trị input từ Search component
       };
 
       return(
@@ -125,10 +168,10 @@
               <div className='product-box'>
                 <div className='product-search d-flex align-items-center'>
                     <div className='searchProductWrapper pe-2'>
-                      <Search />
+                      <Search onSearch={handleSearchInput}/>
                     </div>
                     <div className='col-md-3 genreWrapper'>
-                      <GenreSelect/>
+                      <GenreSelect onGenreIdChange={handleGenreIdChange}/>
                     </div>
                     <div className='order-select p-0'>
                       <FormControl sx={{ m: 1, minWidth: 120 }} size="small">

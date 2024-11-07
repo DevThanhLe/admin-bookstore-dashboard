@@ -32,73 +32,44 @@ const StyledBreadcrumb = styled(Chip)(({ theme }) => {
 });
 
 const ProductUpload = () => {
-  // const token = localStorage.getItem("token");
-//   tạo form 
-  const initialFormData = {
-    title: '',
-    brandId: [],
-    price: 0,
-    quantity: 0,
-    Description: '',
-    typeBookId: 0,
-    authorName: ''
-  };
-
-  const [formData, setFormData] = useState(initialFormData);
-
-//   const [submittedData, setSubmittedData] = useState(null); // State để lưu trữ dữ liệu đã submit
-
+  const [title, setTitle] = useState('');
+  const [authorName, setAuthorName] = useState('');
+  const [price, setPrice] = useState(0);
+  const [quantity, setQuantity] = useState(0);
+  const [description, setDescription] = useState('');
+  const [typeBookId, setTypeBookId] = useState(0);
+  const [brandId, setBrandId] = useState([]);
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
-
   const [bookFile, setBookFile] = useState(null);
+  const [resetGenres, setResetGenres] = useState(false);
 
-
-  const [stock, setStock] = useState(0);
-  const [resetGenres, setResetGenres] = useState(false); // State để reset genre
-
-  // Điều kiện form
   const validateForm = () => {
-    // Kiểm tra các trường bắt buộc
-    if (!formData.title || !formData.authorName || !formData.Description) {
+    if (!title || !authorName || !description) {
       toast.error("All fields are required");
       return false;
     }
-
-    if (!formData.price || formData.price <= 0) {
+    if (!price || price <= 0) {
       toast.error("Price must be greater than 0");
       return false;
     }
-
-    if (formData.typeBookId === 0) {
+    if (typeBookId === 0) {
       toast.error("Please select a type of book");
       return false;
     }
-
-    if (formData.brandId.length === 0) {
+    if (brandId.length === 0) {
       toast.error("Please select at least one genre");
       return false;
     }
-
     if (!imageFile) {
       toast.error("Please upload an image");
       return false;
     }
-
-    if (formData.typeBookId !== 1 && !bookFile) {
+    if (typeBookId !== 1 && !bookFile) {
       toast.error("Ebook file is required for Ebook type");
       return false;
     }
-
     return true;
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
   };
 
   const handleFileChange = (e) => {
@@ -106,8 +77,6 @@ const ProductUpload = () => {
     if (file) {
       setImageFile(file);
       setImagePreview(URL.createObjectURL(file));
-    } else {
-      console.error('No valid file was selected.');
     }
   };
 
@@ -115,106 +84,51 @@ const ProductUpload = () => {
     const file = e.target.files[0];
     if (file) {
       setBookFile(file);
-      // setImagePreview(URL.createObjectURL(file));
-    } else {
-      console.error('No valid file was selected.');
     }
-
-    // if(bookFile === null){
-    //   e.target.value = null;
-    // }
   };
 
-  // Callback function để nhận updatedGenreId từ GenreSelect
   const handleGenreIdChange = (updatedGenreId) => {
-    setFormData((prevFormData) => ({
-    ...prevFormData,
-    brandId: updatedGenreId
-    }));
+    setBrandId(updatedGenreId);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
+    if (!validateForm()) return;
 
-    if (!validateForm()) {
-        return; // Không submit nếu form không hợp lệ
-    }
-    // Cập nhật quantity bằng giá trị stock trước khi gửi dữ liệu
-    const updatedFormData = {
-      ...formData,
-      quantity: stock,
-    };
-
-    // Cập nhật formData state
-    setFormData(updatedFormData);
-
-    // Tạo FormData
     const data = new FormData();
-    // if (imageFile) {
-    data.append('ImageFile', imageFile);  
-    // } else {
-    //   toast.error("Please upload an image");
-    //   return;
-    // }
-  
-    // Append book file if it exists
-    // if (bookFile) {
-      data.append('EbookFile', bookFile);
-    // } else {
-    //   toast.error("Please upload a book file");
-    //   return;
-    // }
-    data.append('Title', formData.title);
-    formData.brandId.forEach((id, index) => {
+    data.append('ImageFile', imageFile);
+    if (bookFile) data.append('EbookFile', bookFile);
+    data.append('Title', title);
+    brandId.forEach((id, index) => {
       data.append(`BrandId[${index}]`, id);
     });
-    data.append('Price', formData.price);
-    data.append('Quantity', stock);
-    data.append('Description', formData.Description);
-    data.append('TypeBookId', formData.typeBookId);
-    data.append('AuthorName', formData.authorName);
+    data.append('Price', price);
+    data.append('Quantity', quantity);
+    data.append('Description', description);
+    data.append('TypeBookId', typeBookId);
+    data.append('AuthorName', authorName);
 
-    // Thực hiện hành động upload ở đây, ví dụ như gửi request đến server
-    // console.log("Data to be submitted:");
-    // for (let pair of data.entries()) {
-    //   console.log(pair[0] + ': ' + pair[1]);
-    // }
-
-    //Gọi API post book
     let res = await createProduct(data);
     setResetGenres(true);
     if (res) {
-      toast.success("Adding product is succeed!");
-      // Reset form fields
-      setFormData(initialFormData);
-      setImageFile(null);
-      setBookFile(null);
-      setImagePreview(null);
-      setStock(0);
-      setTimeout(() => setResetGenres(false), 0);
-    } 
-    else 
-    {
-      toast.error("Error!");
-    }
-    // Nếu bạn muốn hiển thị dữ liệu đã submit trên giao diện người dùng
-    // setSubmittedData(updatedFormData);
-  };
-
-  const handleChangeStock = (e) => {
-    const value = Number(e.target.value);
-    if (value >= 0) {
-      setStock(value);
+      toast.success("Product added successfully!");
+      resetForm();
     } else {
-      setStock(0);
+      toast.error("Error adding product!");
     }
   };
 
-  const handleChangeTypeOfBook = (event) => {
-    const value = event.target.value;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      typeBookId: value
-    }));
+  const resetForm = () => {
+    setTitle('');
+    setAuthorName('');
+    setPrice(0);
+    setQuantity(0);
+    setDescription('');
+    setTypeBookId(0);
+    setBrandId([]);
+    setImageFile(null);
+    setImagePreview(null);
+    setBookFile(null);
+    setResetGenres(false);
   };
 
   return (
@@ -231,9 +145,7 @@ const ProductUpload = () => {
 
         <div className='form'>
           <div className='row'>
-            {/* display img uploaded */}
             <div className='col-sm-5'>
-
               <div className='card p-4'>
                 <h5 className='mb-0'>Upload Image</h5>
                 <input
@@ -254,85 +166,64 @@ const ProductUpload = () => {
                   type='file'
                   onChange={handleFileBookChange}
                   style={{ marginTop: '20px' }}
-                  disabled={formData.typeBookId !== 2}
+                  disabled={typeBookId !== 2}
                 />
               </div>
-
             </div>
-            {/* get data and post  */}
             <div className='col-sm-7'>
               <div className='card ps-4 pe-4 pt-4'>
-                <h5 className='mb-4'>Basic Infomation</h5>
-                
-                {/* Book name  */}
+                <h5 className='mb-4'>Basic Information</h5>
                 <div className='form-group'>
                   <h6>Title</h6>
-                  <input type='text' name='title' value={formData.title} onChange={handleInputChange} />
+                  <input type='text' value={title} onChange={(e) => setTitle(e.target.value)} />
                 </div>
 
-                {/* Author name  */}
                 <div className='form-group'>
                   <h6>Author</h6>
-                  <input type='text' name='authorName' value={formData.authorName} onChange={handleInputChange} />
+                  <input type='text' value={authorName} onChange={(e) => setAuthorName(e.target.value)} />
                 </div>
 
-                {/* Price  */}
                 <div className='form-group'>
                   <h6>Price</h6>
-                  <input type='number' name='price' value={formData.price} onChange={handleInputChange} />
+                  <input type='number' value={price} onChange={(e) => setPrice(Number(e.target.value))} />
                 </div>
 
-                {/* Quantity  */}
                 <div className='form-group'>
                   <h6>Quantity</h6>
                   <input
                     type='number'
-                    value={stock}
-                    onChange={handleChangeStock}
+                    value={quantity}
+                    onChange={(e) => setQuantity(Number(e.target.value))}
                     min='0'
                     onKeyDown={(e) => {
-                      if (e.key === '-' || e.key === 'e' || e.key === 'E') {
-                        e.preventDefault();
-                      }
+                      if (['-', 'e', 'E'].includes(e.key)) e.preventDefault();
                     }}
                   />
                 </div>
-                
-                {/* Link ebook  */}
-                {/* <div className='form-group'>
-                  <h6>Link Ebook</h6>
-                  <input type='text' />
-                </div> */}
-                
-                {/* Description  */}
+
                 <div className='form-group'>
                   <h6>Description</h6>
                   <textarea
-                    name='Description'
-                    value={formData.Description}
-                    onChange={handleInputChange}
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                     rows={5}
                     cols={10}
                   />
                 </div>
-                
-                {/* Type book  */}
+
                 <div className='row'>
                   <div className='col pb-2'>
                     <h6>Type Of Book</h6>
                     <Select
-                      value={formData.typeBookId}
-                      onChange={handleChangeTypeOfBook}
+                      value={typeBookId}
+                      onChange={(e) => setTypeBookId(e.target.value)}
                       displayEmpty
                       inputProps={{ 'aria-label': 'Without label' }}
                       className='w-100'
                     >
-                      <MenuItem value={0}>
-                        <em>None</em>
-                      </MenuItem>
+                      <MenuItem value={0}><em>None</em></MenuItem>
                       <MenuItem value={1}>Nbook</MenuItem>
                       <MenuItem value={2}>Ebook</MenuItem>
-                      {/* <MenuItem value={3}>Nbook and Ebook</MenuItem> */}
                     </Select>
                   </div>
 
@@ -340,7 +231,6 @@ const ProductUpload = () => {
                     <h6>Genre</h6>
                     <GenreSelect className='genre-upload' onGenreIdChange={handleGenreIdChange} resetGenres={resetGenres}/>
                   </div>
-
                 </div>
 
                 <div className='card mt-4'>
@@ -348,15 +238,6 @@ const ProductUpload = () => {
                     Upload Product
                   </Button>
                 </div>
-                
-                {/* Check form  */}
-                {/* {submittedData && (
-                  <div className='card mt-4'>
-                    <h5>Submitted Data:</h5>
-                    <pre>{JSON.stringify(submittedData, null, 2)}</pre>
-                  </div>
-                )} */}
-
               </div>
             </div>
           </div>

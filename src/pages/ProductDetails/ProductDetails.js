@@ -13,8 +13,11 @@ import { BiSolidCategory } from "react-icons/bi";
 import { IoPricetagsSharp } from "react-icons/io5";
 import { MdClass } from "react-icons/md";
 import { getProductById } from '../../services/ProductService';
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate  } from "react-router-dom";
 import { useEffect, useCallback } from "react";
+import DeleteDialog from './components/DeleteDialog';
+import { BsFillBookmarkStarFill } from "react-icons/bs";
+import EditBookDialog from './components/EditBookDialog';
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
   const backgroundColor =
@@ -38,7 +41,10 @@ const StyledBreadcrumb = styled(Chip)(({ theme }) => {
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [productsData, setProductsData] = React.useState(null);
+  const [open, setOpen] = React.useState(false); // Open delete dialog
+  const [openEdit, setOpenEdit] = React.useState(false); // Open edit dialog
 
   const getProductDetails = useCallback(async () => {
     const res = await getProductById(id);
@@ -76,6 +82,45 @@ const ProductDetails = () => {
   if (!productsData) {
     return <div>Loading...</div>;
   }
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleDelete = () => {
+    // Logic để xóa sản phẩm
+    console.log("Sản phẩm đã được xóa");
+    setOpen(false);
+    navigate('/Products');
+  };
+
+  const handleEditOpen = () => {
+    setOpenEdit(true);
+  };
+
+  const handleEditClose = () => {
+    setOpenEdit(false);
+  };
+
+  const handleSaveChanges = (updatedData) => {
+    // Cập nhật productsData hoặc gọi API lưu thay đổi
+    console.log("Updated product data:", updatedData);
+    setOpenEdit(false);
+  };
+
+  // const handleDelete = async () => {
+  //   try {
+  //     await deleteProductById(id);
+  //     console.log("Sản phẩm đã được xóa");
+  //     navigate('/Products');  // Chuyển hướng đến trang /Products
+  //   } catch (error) {
+  //     console.error("Lỗi khi xóa sản phẩm:", error);
+  //   }
+  // };
 
   return (
     <div>
@@ -122,15 +167,17 @@ const ProductDetails = () => {
                   </div>
 
                   {/* Quantity */}
-                  <div className='row pb-3'>
-                    <div className='name-detail col-sm-5 d-flex align-items-center'>
-                      <FaBox className='icon' />
-                      <span className='name fw-bold'>Quantity</span>
+                  {productsData.typeBookId !== 2 && (
+                    <div className='row pb-3'>
+                      <div className='name-detail col-sm-5 d-flex align-items-center'>
+                        <FaBox className='icon' />
+                        <span className='name fw-bold'>Quantity</span>
+                      </div>
+                      <div className='col-sm-7'>
+                        <span className='name'>{productsData.quantity}</span>
+                      </div>
                     </div>
-                    <div className='col-sm-7'>
-                      <span className='name'>{productsData.quantity}</span>
-                    </div>
-                  </div>
+                  )}
 
                   {/* Brand Names */}
                   <div className='row pb-3'>
@@ -165,6 +212,17 @@ const ProductDetails = () => {
                     </div>
                   </div>
 
+                  {/* Price */}
+                  <div className='row pb-3'>
+                    <div className='name-detail col-sm-5 d-flex align-items-center'>
+                      <BsFillBookmarkStarFill className='icon' />
+                      <span className='name fw-bold'>Rating</span>
+                    </div>
+                    <div className='col-sm-7'>
+                      <span className='name'>{(productsData.rating ?? 5)} ★</span>
+                    </div>
+                  </div>
+
                   {/* Description */}
                   <div className='row'>
                     <div className='name-detail col-sm-5 d-flex align-items-center'>
@@ -181,14 +239,26 @@ const ProductDetails = () => {
             <div className='lastcontent col-md-1'>
               <div className='buttonWrapper pt-3 pb-3'>
                 {/* edit  */}
-                <Button className="success" color="success"><FaPencil /></Button>
+                <Button className="success" color="success" onClick={handleEditOpen}><FaPencil /></Button>
                 {/* delete  */}
-                <Button className="error" color="error"><IoTrashBin /></Button>
+                {/* <Button className="error" color="error"><IoTrashBin /></Button> */}
+                <Button className="error" color="error" onClick={handleClickOpen}><IoTrashBin /></Button>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <DeleteDialog
+        open={open}
+        onClose={handleClose}
+        onDelete={handleDelete}
+      />
+      <EditBookDialog
+        open={openEdit}
+        onClose={handleEditClose}
+        onSave={handleSaveChanges}
+        product={productsData}
+      />
     </div>
   );
 }
