@@ -11,36 +11,44 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import { toast,ToastContainer} from 'react-toastify'; // Import Toastify
+import { toast, ToastContainer } from 'react-toastify'; // Import Toastify
+import GenreSelect from './GenreSelect';
 
 const EditBookDialog = ({ open, onClose, onSave, product }) => {
   const [title, setTitle] = useState(product.title);
   const [authorName, setAuthorName] = useState(product.authorName);
   const [quantity, setQuantity] = useState(product.quantity);
-  const [brandNames, setBrandNames] = useState(product.brandNames.join(', '));
   const [typeBookId, setTypeBookId] = useState(product.typeBookId);
   const [price, setPrice] = useState(product.price);
-  const [rating, setRating] = useState(product.rating);
   const [description, setDescription] = useState(product.description);
-  const [image, setImage] = useState(product.image);
+  const [image, setImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(product.image);
   const [file, setFile] = useState(null); // State cho file doc/pdf
+  const [brandId, setBrandId] = useState([]);
 
   useEffect(() => {
     if (open) {
       setTitle(product.title);
       setAuthorName(product.authorName);
       setQuantity(product.quantity);
-      setBrandNames(product.brandNames.join(', '));
       setTypeBookId(product.typeBookId);
       setPrice(product.price);
-      setRating(product.rating);
       setDescription(product.description);
-      setImage(product.image);
+      setImage(null);
       setPreviewImage(product.image);
       setFile(null); // Reset file doc/pdf
+      setBrandId([]);
     }
   }, [open, product]);
+
+  useEffect(() => {
+    if (typeBookId === 2) {
+      setQuantity(20);
+    } else {
+      setFile(null);
+      setQuantity(0);
+    }
+  }, [typeBookId]);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -58,38 +66,38 @@ const EditBookDialog = ({ open, onClose, onSave, product }) => {
     }
   };
 
+  const handleGenreIdChange = (updatedGenreId) => {
+    setBrandId(updatedGenreId);
+  };
+
   const handleSave = () => {
-    // Kiểm tra nếu có trường nào bị bỏ trống
-    if (!title || !authorName || !description ) {
+    if (!title || !authorName || !description) {
       toast.error("Vui lòng điền đầy đủ thông tin trước khi lưu!");
       return;
     }
 
-    // Nếu typeBookId === 2, phải có file tài liệu
-    // if (typeBookId === 2 && !file) {
-    //   toast.error("Vui lòng tải lên tài liệu (PDF hoặc DOC)! vì Type Book là Ebook !");
-    //   return;
-    // }
+    if (brandId.length === 0) {
+      toast.error("Vui lòng chọn ít nhất 1 thể loại cho sách trước khi lưu!");
+      return;
+    }
 
-    // Gọi hàm onSave với các giá trị đã nhập
     onSave({
       title,
       authorName,
       quantity,
-      brandNames: brandNames.split(',').map(name => name.trim()),
+      brandId: brandId,
       typeBookId,
       price,
-      rating,
       description,
       image,
       file,
     });
 
-    toast.success("Sản phẩm đã được lưu thành công!");
+    // toast.success("Sản phẩm đã được lưu thành công!");
   };
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="30%">
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
       <DialogTitle>
         Edit Product
         <IconButton
@@ -101,39 +109,33 @@ const EditBookDialog = ({ open, onClose, onSave, product }) => {
         </IconButton>
       </DialogTitle>
       <DialogContent dividers>
-        <div className='edit-book'>
+        <div className='edit-book d-flex justify-content-lg-between' style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
 
-          <div className='col-sm-5 me-3'>
-            {/* Cột 1: Hình ảnh và upload image/document */}
-            <div style={{ width: '100%' }}>
-              <div style={{ textAlign: 'center', marginBottom: 20 }}>
-                <img src={previewImage} alt="Product" style={{ width: '50%', maxHeight: 500 }} />
-              </div>
-
-              <Button variant="contained" component="label" fullWidth>
-                Upload Image
-                <input type="file" hidden onChange={handleImageChange} accept="image/*" />
-              </Button>
-
-              {/* Nếu typeBookId === 2, hiển thị upload document */}
-              {typeBookId === 2 && (
-                <>
-                  <Button variant="contained" component="label" fullWidth style={{ marginTop: 10 }}>
-                    Upload Document (PDF or DOC)
-                    <input type="file" hidden onChange={handleFileChange} accept=".pdf,.doc,.docx" />
-                  </Button>
-
-                  {/* Hiển thị tên file đã chọn */}
-                  {file && (
-                    <p className='mt-2'> File's name : {file.name}</p>
-                  )}
-                </>
-              )}
+          <div className='col-sm-5 pe-2' style={{ flex: '1 1 45%' }}>
+            <div style={{ textAlign: 'center', marginBottom: 20 }}>
+              <img src={previewImage} alt="Product" style={{ width: 300 , height: 400 }} />
             </div>
+
+            <Button variant="contained" component="label" fullWidth>
+              Upload Image
+              <input type="file" hidden onChange={handleImageChange} accept="image/*" />
+            </Button>
+
+            {typeBookId === 2 && (
+              <>
+                <Button variant="contained" component="label" fullWidth style={{ marginTop: 10 }}>
+                  Upload Document (PDF or DOC)
+                  <input type="file" hidden onChange={handleFileChange} accept=".pdf,.doc,.docx" />
+                </Button>
+
+                {file && (
+                  <p className='mt-2'> File's name: {file.name}</p>
+                )}
+              </>
+            )}
           </div>
 
-          {/* Cột 2: Các trường thông tin */}
-          <div className='col-sm-7'>
+          <div className='col-sm-7 ps-3' style={{ flex: '1 1 50%' }}>
             <TextField
               fullWidth
               margin="normal"
@@ -147,33 +149,26 @@ const EditBookDialog = ({ open, onClose, onSave, product }) => {
               label="Author Name"
               value={authorName}
               onChange={(e) => setAuthorName(e.target.value)}
+              className={typeBookId === 2 ? 'mb-3' : ''}
             />
 
-            {/* Chỉ hiển thị trường Quantity nếu typeBookId khác 2 */}
             {typeBookId !== 2 && (
-                <TextField
-                    fullWidth
-                    margin="normal"
-                    label="Quantity"
-                    type="number"
-                    value={quantity}
-                    onChange={(e) => {
-                        // Nếu input trống, đặt lại giá trị thành 0
-                        const newQuantity = e.target.value === '' ? 0 : Number(e.target.value);
-                        setQuantity(newQuantity);
-                    }}
-                />
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Quantity"
+                type="number"
+                value={quantity}
+                className='mb-3'
+                onChange={(e) => {
+                  const newQuantity = e.target.value === '' ? 0 : Number(e.target.value);
+                  setQuantity(newQuantity);
+                }}
+              />
             )}
 
-            <TextField
-              fullWidth
-              margin="normal"
-              label="Brand Names"
-              value={brandNames}
-              onChange={(e) => setBrandNames(e.target.value)}
-            />
+            <GenreSelect className='genre-cus' selectedBrandNames={product.brandNames} onGenreIdChange={handleGenreIdChange} />
 
-            {/* Select Type Book */}
             <FormControl fullWidth margin="normal">
               <InputLabel>Type</InputLabel>
               <Select

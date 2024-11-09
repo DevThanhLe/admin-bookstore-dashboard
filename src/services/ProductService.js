@@ -49,11 +49,28 @@ const createProduct = (product) => {
 };
 export { createProduct };
 
+// Chỉnh sửa sản phẩm
+const updateProduct = (id,product) => {
+  return axios.put(`api/Book/${id}`, product, {
+    headers: {
+      // Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+export { updateProduct };
+
 //Lấy sản phẩm theo id
 const getProductById = (id) => {
   return axios.get(`api/Book/${id}`);
 };
 export { getProductById };
+
+
+const unSaleProduct = (id) => {
+  return axios.put(`api/Book/delete?id=${id}`);
+};
+export { unSaleProduct };
 
 // Search Sản phẩm
 // const searchAllProduct = (brandId,nameInput) => {

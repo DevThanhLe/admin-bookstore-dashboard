@@ -6,18 +6,23 @@ import { emphasize, styled } from '@mui/material/styles';
 import Chip from '@mui/material/Chip';
 import Slider from "react-slick";
 import { FaUserPen, FaPencil, FaBox } from "react-icons/fa6";
-import { IoTrashBin } from "react-icons/io5";
+// import { IoTrashBin } from "react-icons/io5";
 import Button from '@mui/material/Button';
 import Description from './components/Description';
 import { BiSolidCategory } from "react-icons/bi";
 import { IoPricetagsSharp } from "react-icons/io5";
 import { MdClass } from "react-icons/md";
 import { getProductById } from '../../services/ProductService';
-import { useParams,useNavigate  } from "react-router-dom";
+import { useParams  } from "react-router-dom";
+// import { useNavigate  } from "react-router-dom";
 import { useEffect, useCallback } from "react";
 import DeleteDialog from './components/DeleteDialog';
 import { BsFillBookmarkStarFill } from "react-icons/bs";
 import EditBookDialog from './components/EditBookDialog';
+import { updateProduct,unSaleProduct } from '../../services/ProductService';
+import { ToastContainer, toast } from 'react-toastify';
+import { FaLock } from "react-icons/fa";
+import { FaLockOpen } from "react-icons/fa";
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
   const backgroundColor =
@@ -41,7 +46,7 @@ const StyledBreadcrumb = styled(Chip)(({ theme }) => {
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [productsData, setProductsData] = React.useState(null);
   const [open, setOpen] = React.useState(false); // Open delete dialog
   const [openEdit, setOpenEdit] = React.useState(false); // Open edit dialog
@@ -91,12 +96,12 @@ const ProductDetails = () => {
     setOpen(false);
   };
 
-  const handleDelete = () => {
-    // Logic để xóa sản phẩm
-    console.log("Sản phẩm đã được xóa");
-    setOpen(false);
-    navigate('/Products');
-  };
+  // const handleDelete = () => {
+  //   // Logic để xóa sản phẩm
+  //   console.log("Sản phẩm đã được xóa");
+  //   setOpen(false);
+  //   navigate('/Products');
+  // };
 
   const handleEditOpen = () => {
     setOpenEdit(true);
@@ -106,21 +111,62 @@ const ProductDetails = () => {
     setOpenEdit(false);
   };
 
-  const handleSaveChanges = (updatedData) => {
+  const handleSaveChanges = async (updatedData) => {
     // Cập nhật productsData hoặc gọi API lưu thay đổi
     console.log("Updated product data:", updatedData);
-    setOpenEdit(false);
+    const data = new FormData();
+    if(updatedData.image !== null)
+      data.append('ImageFile', updatedData.image);
+    if (updatedData.file !== null) 
+      data.append('EbookFile', updatedData.file);
+    data.append('Title', updatedData.title);
+    updatedData.brandId.forEach((id, index) => {
+      data.append(`brandId[${index}]`, id);
+    });
+    data.append('Price', updatedData.price);
+    data.append('Quantity', updatedData.quantity);
+    data.append('Description', updatedData.description);
+    data.append('TypeBookId', updatedData.typeBookId);
+    data.append('AuthorName', updatedData.authorName);
+
+    try {
+      let res = await updateProduct(productsData.bookId,data);
+      // setResetGenres(true);
+      if (res) {
+        // toast.success("Product modified successfully!");
+        // resetForm();
+        toast.success("Sản phẩm đã được lưu thành công!");
+        setOpenEdit(false);
+      } else {
+        toast.error("Gặp lỗi khi chỉnh sửa!");
+      }
+    } catch (error) {
+      toast.error("Gặp lỗi khi chỉnh sửa!");
+    } finally {
+      // window.location.reload();
+      getProductDetails();
+    }
+    // setOpenEdit(false);
   };
 
-  // const handleDelete = async () => {
-  //   try {
-  //     await deleteProductById(id);
-  //     console.log("Sản phẩm đã được xóa");
-  //     navigate('/Products');  // Chuyển hướng đến trang /Products
-  //   } catch (error) {
-  //     console.error("Lỗi khi xóa sản phẩm:", error);
-  //   }
-  // };
+  
+
+  const handleDelete = async () => {
+    try {
+      let res = await unSaleProduct(productsData.bookId);
+      if(res){
+        setOpen(false);
+        toast.success("Sản phẩm đã được ngưng bán!");
+      }
+      // console.log("Sản phẩm đã được xóa");
+      // navigate('/Products');  // Chuyển hướng đến trang /Products
+    } catch (error) {
+      console.error("Lỗi khi xóa sản phẩm:", error);
+    }
+    finally {
+      getProductDetails();
+    }
+  };
 
   return (
     <div>
@@ -242,7 +288,17 @@ const ProductDetails = () => {
                 <Button className="success" color="success" onClick={handleEditOpen}><FaPencil /></Button>
                 {/* delete  */}
                 {/* <Button className="error" color="error"><IoTrashBin /></Button> */}
-                <Button className="error" color="error" onClick={handleClickOpen}><IoTrashBin /></Button>
+                {/* Render nút khóa hoặc mở khóa dựa vào isSale */}
+                {productsData.isSale === 1 ? (
+                  <Button className="error" color="error" onClick={handleClickOpen}>
+                    <FaLock />
+                  </Button>
+                ) : (
+                  // <Button className="error" color="warning" onClick={handleClickOpen}>
+                  <Button className="warning" color="warning">
+                    <FaLockOpen />
+                  </Button>
+                )}
               </div>
             </div>
           </div>
@@ -259,6 +315,7 @@ const ProductDetails = () => {
         onSave={handleSaveChanges}
         product={productsData}
       />
+      <ToastContainer />
     </div>
   );
 }

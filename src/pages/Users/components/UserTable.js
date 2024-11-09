@@ -6,6 +6,7 @@ import { FaPencil } from "react-icons/fa6";
 import { IoTrashBin } from "react-icons/io5";
 import Pagination from '@mui/material/Pagination';
 import { fetchAllUsers } from '../../../services/UserService';
+import { FaEye } from "react-icons/fa";
 
 // const usersData = [
 //     {
@@ -69,6 +70,27 @@ const UserTable = () => {
     const [currentPage, setCurrentPage] = React.useState(1); // Trang hiện tại bắt đầu từ 1
     const [totalPages, setTotalPages] = React.useState(1); // Tổng số trang mặc định
 
+    // const [open, setOpen] = React.useState(false);
+    // const [current, setCurrent] = React.useState(null);
+
+    // const handleClickOpen = (order) => {
+    //     setCurrent(order);
+    //     setOpen(true);
+    // };
+
+    // const handleClose = () => {
+    //     setOpen(false);
+    // };
+
+    // const handleSave = () => {
+    //     // Save the changes here, you might need to update the state or make an API call
+    //     // console.log("Saved Data:", current);  // log ra dữ liệu đã chỉnh sửa
+    //     const { userId, orderItems, orderId, ...dataToSave } = current; // loại bỏ orderItems và orderId
+
+    //     console.log("Saved Data:", dataToSave); // log ra dữ liệu đã chỉnh sửa
+    //     setOpen(false);
+    // };
+
     // Hàm gọi API để lấy dữ liệu sản phẩm
     // const getProducts = async (page,token) => {
     const getUsers = async (page) => {
@@ -105,84 +127,58 @@ const UserTable = () => {
                 {/* table head */}
                 <thead className='custom-thead'>
                     <tr>
-                        <th className='bg-dark text-white'>Id</th>
-                        <th className='bg-dark text-white'>Name</th>
+                        <th className='bg-dark text-white'>User ID</th>
+                        <th className='bg-dark text-white'>FullName</th>
                         <th className='bg-dark text-white'>Email</th>
                         <th className='bg-dark text-white'>Phone</th>
                         <th className='bg-dark text-white'>Address</th>
-                        {/* <th className='bg-dark text-white'>Rating</th>
-                        <th className='bg-dark text-white'>Order</th> */}
                         <th className='bg-dark text-white'>Action</th>
                     </tr>
                 </thead>
                 {/* table body */}
+                
                 <tbody>
                     {usersData.map(user => (
                         <tr key={user.userId}>
                             <td className='center-text'>#{user.userId}</td>
-
-                            <td className='custom-td-user'>
-                                <div className='d-flex userBox'>
-                                    {/* <div className='imgWrapper'>
-                                        <img src={user.image} alt='bookImg'/>
-                                    </div> */} 
-                                    <div className='info center-text'> 
-                                        <h6>{user.fullname}</h6>
-                                    </div>
-                                </div>
-                            </td>
-
-                            <td className='custom-td-user'>
-                                <div className='d-flex userBox'>
-                                    <div className='info center-text'> 
-                                        <h6>{user.email}</h6>
-                                    </div>
-                                </div>
-                            </td>
-
-                            <td className='custom-td-userPhone'>
-                                <div className='d-flex userPhoneBox'>
-                                    <div className='info-phone center-text'> 
-                                        <h6>{user.phone}</h6>
-                                    </div>
-                                </div>
-                            </td>
-
-
-                            {/* <td className='center-text'>
-                                {user.address}
-                            </td> */}
-                            
-                            <td className='custom-td-userAddress'>
-                                <div className='d-flex userAddressBox'>
-                                    <div className='info-address center-text'> 
-                                        <h6>{user.address}</h6>
-                                    </div>
-                                </div>
-                            </td>
-                            {/* <td className='center-text'>{user.rating}</td>
-                            <td className='center-text'>{user.order}</td> */}
+                            <td className='center-text' style={{ maxWidth: "150px" }}>{user.fullname}</td>
+                            <td className='center-text' style={{ maxWidth: "100px" }}>{user.email}</td>
+                            <td className='center-text' style={{ maxWidth: "100px" }}>{user.phone}</td>
+                            <td className='center-text' style={{ maxWidth: "150px" }}>{user.address}</td>
+                            {/* <td className='center-text'>{new Date(order.orderDate).toLocaleDateString('en-GB')}</td> */}
                             <td className='custom-td p-0 w-1'>
                                 <div className='actions d-flex align-items-center justify-content-between'>
-                                    <Button className="success" color="success"><FaPencil /></Button>
+                                    <Button className="secondary" color="secondary"><FaEye /></Button>
+                                    {/* <Button className="success" color="success" onClick={() => handleClickOpen(user)} aria-hidden="false" ><FaPencil /></Button> */}
+                                    <Button className="success" color="success" aria-hidden="false" ><FaPencil /></Button>
                                     <Button className="error" color="error"><IoTrashBin /></Button>
                                 </div>
                             </td>
                         </tr>
                     ))}
                 </tbody>
+
+
             </table>
             {/* Pagination */}
-            <div className="d-flex tableFooter">
+                <div className="d-flex tableFooter">
                     <Pagination
-                      count={totalPages}
-                      page={currentPage}
-                      onChange={handleChangePage}
-                      className='pagination'
-                      showFirstButton
-                      showLastButton
+                        count={totalPages}
+                        page={currentPage}
+                        onChange={handleChangePage}
+                        className='pagination'
+                        showFirstButton
+                        showLastButton
                     />
-            </div>
+                </div>
+                {/* edit dialog  */}
+                {/* <EditDialog
+                    open={open}
+                    handleClose={handleClose}
+                    current={current}
+                    setCurrent={setCurrent}
+                    handleSave={handleSave}
+                /> */}
         </div>
     );
 };

@@ -5,6 +5,7 @@ import { FaEye } from "react-icons/fa";
 import { IoTrashBin } from "react-icons/io5";
 import Pagination from '@mui/material/Pagination';
 import EditDialog from './EditDialog';
+import { Link } from 'react-router-dom';
 
 const ordersData = [
     {
@@ -12,10 +13,10 @@ const ordersData = [
         "userId": 1,
         "orderDate": "2024-01-15T00:00:00",
         "status": "Completed",
-        "totalAmount": 450000,
-        "name": "User One",
-        "phone": "1234567890",
-        "address": "123 Street, City",
+        "totalAmount": 2000000,
+        "name": "Lê Xuân Thành",
+        "phone": "0901687315",
+        "address": "274 Nguyễn Văn Tạo, Xã Long Thới, Huyện Nhà Bè, TP.HCM",
         "orderItems": [
             {
                 "orderItemId": 1,
@@ -37,9 +38,9 @@ const ordersData = [
         "orderDate": "2024-05-20T00:00:00",
         "status": "Canceled",
         "totalAmount": 67000,
-        "name": "User Two",
-        "phone": "1234567890",
-        "address": "123 Queen, City",
+        "name": "Nguyễn Thị Mỹ Dung",
+        "phone": "0901416370",
+        "address": "08 Bế Văn Cấm, Phường Tân Kiểng, Quận 7, TP.HCM",
         "orderItems": [
             {
                 "orderItemId": 1,
@@ -98,13 +99,14 @@ const OrderTable = () => {
                     </tr>
                 </thead>
                 {/* table body */}
+                
                 <tbody>
                     {ordersData.map(order => (
                         <tr key={order.orderId}>
                             <td className='center-text'>#{order.orderId}</td>
-                            <td className='center-text'>{order.name}</td>
-                            <td className='center-text'>{order.phone}</td>
-                            <td className='center-text'>{order.address}</td>
+                            <td className='center-text' style={{ maxWidth: "150px" }}>{order.name}</td>
+                            <td className='center-text' style={{ maxWidth: "100px" }}>{order.phone}</td>
+                            <td className='center-text' style={{ maxWidth: "150px" }}>{order.address}</td>
                             <td className='center-text'>{new Date(order.orderDate).toLocaleDateString('en-GB')}</td>
                             <td className='center-text'>
                                 <span style={{
@@ -116,9 +118,9 @@ const OrderTable = () => {
                             <td className='center-text'>{order.totalAmount.toLocaleString('vi-VN')} VND</td>
                             <td className='custom-td p-0 w-1'>
                                 <div className='actions d-flex align-items-center justify-content-between'>
-                                    {/* <Link to={`/Products/Details/${product.id}`}> */}
+                                    <Link to='/Orders/Details'>
                                         <Button className="secondary" color="secondary"><FaEye /></Button>
-                                    {/* </Link> */}
+                                    </Link>
                                     <Button className="success" color="success" onClick={() => handleClickOpen(order)} aria-hidden="false" ><FaPencil /></Button>
                                     <Button className="error" color="error"><IoTrashBin /></Button>
                                 </div>
@@ -126,6 +128,8 @@ const OrderTable = () => {
                         </tr>
                     ))}
                 </tbody>
+
+
             </table>
             {/* Pagination */}
             <div className="d-flex tableFooter">

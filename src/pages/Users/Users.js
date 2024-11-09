@@ -10,6 +10,7 @@ import { Breadcrumbs } from '@mui/material';
 import UserTable from './components/UserTable';
 import { emphasize, styled } from '@mui/material/styles';
 import Chip from '@mui/material/Chip';
+import Search from '../../components/Search/Search';
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
     const backgroundColor =
@@ -44,9 +45,17 @@ const User = () => {
             </div>
 
             <div className='card shadow border-0 p-3 mt-4'>
+              <div className='row cardFilters d-flex align-items-center'>
+                <div className='col-md-3'>
+                    <h4>SEARCH</h4>
+                    <div className='searchProductWrapper d-flex align-items-center'>
+                      <Search />
+                    </div>
+                </div>
+              </div>
 
                 {/* table product data */}
-                <UserTable/>
+              <UserTable/>
             </div>
         </div>
     );

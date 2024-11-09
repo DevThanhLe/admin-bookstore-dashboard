@@ -9,11 +9,11 @@
   import { Link } from 'react-router-dom';
   import Search from '../../components/Search/Search';
   import GenreSelect from './components/GenreSelect';
-  import InputLabel from '@mui/material/InputLabel';
-  import MenuItem from '@mui/material/MenuItem';
-  import FormControl from '@mui/material/FormControl';
-  import Select from '@mui/material/Select';
-  import OutlinedInput from '@mui/material/OutlinedInput';
+  // import InputLabel from '@mui/material/InputLabel';
+  // import MenuItem from '@mui/material/MenuItem';
+  // import FormControl from '@mui/material/FormControl';
+  // import Select from '@mui/material/Select';
+  // import OutlinedInput from '@mui/material/OutlinedInput';
   import Pagination from '@mui/material/Pagination';
   // import { useState } from "react";
   // import { useEffect } from "react";
@@ -51,7 +51,7 @@
 
 
   // const ProductStructure = ({ id,name, price, originalPrice, reviews, rating, image }) => {
-  const ProductStructure = ({ id, name, price, image }) => {
+  const ProductStructure = ({ id, name, price, image, rating, isSale }) => {
 
     // const roundedRating = Math.round(rating);
 
@@ -59,11 +59,11 @@
       <Link className="product" to={`/Products/Details/${id}`}>
         <img src={image} alt={name} />
         <h2>{name}</h2>
-        {/* <div className="product-rating">
-          {'★'.repeat(roundedRating)}{'☆'.repeat(5 - roundedRating)}
-          {rating} ★
-          <span>({reviews} reviews)</span>
-        </div> */}
+        <div className="product-rating-cus">    
+          {/* {'★'.repeat(roundedRating)}{'☆'.repeat(5 - roundedRating)} */}
+          {(rating ?? 5)} ★
+          <span style={{ color: isSale === 1 ? 'green' : 'red' }}>{isSale === 1 ? "(đang bán)" : "(ngưng bán)"}</span>
+        </div>
         <p className="product-price">
           {/* <span className="original-price">${originalPrice}</span> ${price} */}
           <span className="original-price">{formatCurrency(price)}</span>
@@ -76,7 +76,7 @@
   const Products = () => {
       const token = localStorage.getItem("token");
 
-      const [order, setOrder] = React.useState('');
+      // const [order, setOrder] = React.useState('');
 
       const [productsData, setProductsData] = React.useState([]);
       const [currentPage, setCurrentPage] = React.useState(1); // Trang hiện tại bắt đầu từ 1
@@ -139,9 +139,9 @@
         setCurrentPage(page);
       };
 
-      const handleChange = (event) => {
-        setOrder(event.target.value);
-      };
+      // const handleChange = (event) => {
+      //   setOrder(event.target.value);
+      // };
 
       const handleGenreIdChange = (updatedGenreId) => {
         setBrandIdList(updatedGenreId);
@@ -173,7 +173,7 @@
                     <div className='col-md-3 genreWrapper'>
                       <GenreSelect onGenreIdChange={handleGenreIdChange}/>
                     </div>
-                    <div className='order-select p-0'>
+                    {/* <div className='order-select p-0'>
                       <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
                         <InputLabel id="demo-multiple-checkbox-label">Order By</InputLabel>
                         <Select
@@ -195,7 +195,7 @@
                           <MenuItem value={2}>Descending</MenuItem>
                         </Select>
                       </FormControl>
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* <div className="product-list">
@@ -223,6 +223,8 @@
                       // reviews={product.reviews}
                       // rating={product.rating}
                       image={product.image}
+                      rating={product.rating}
+                      isSale={product.isSale}
                     />
                   ))}
                 </div>

@@ -13,7 +13,7 @@ import User from './pages/Users/Users';
 import Orders from './pages/Orders/Orders';
 import ProductUpload from './pages/ProductUpload/productUpload';
 import Revenue from './pages/Revenue/Revenue';
-
+import OrderDetails from './pages/OrderDetails/OrderDetails';
 
 const MyContext = createContext();
 // window.localStorage.removeItem("token");
@@ -63,6 +63,7 @@ function App() {
               <Route path="/Users" exact={true} element={<User/>}/>
               <Route path="/Orders" exact={true} element={<Orders/>}/>
               <Route path="/Revenue" exact={true} element={<Revenue/>}/>
+              <Route path="/Orders/Details" exact={true} element={<OrderDetails/>}/>
 
 
             </Routes>

@@ -10,7 +10,7 @@ const productsData = [
     {
         id: 1,
         name: "Sống để kể lại những anh hùngaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa LMAOAOAOAOÔAOO",
-        brand: "History",
+        brand: "History,History,History,History,History,History,History,History",
         type: "N-Book",
         price: "250,000",
         rating: "4.5",
@@ -92,10 +92,10 @@ const DashboardProductTable = () => {
                                     </div>
                                 </div>
                             </td>
-                            <td className='center-text'>{product.brand}</td>
+                            <td className='center-text' style={{ maxWidth: "100px" }}>{product.brand}</td>
                             <td className='center-text'>{product.type}</td>
-                            <td className='center-text'>{product.price}</td>
-                            <td className='center-text'>{product.rating}</td>
+                            <td className='center-text' style={{ maxWidth: "80px" }}>{product.price} VND</td>
+                            <td className='center-text'>{product.rating} ★</td>
                             <td className='center-text'>{product.order}</td>
                             <td className='custom-td p-0 w-1'>
                                 <div className='actions d-flex align-items-center justify-content-between'>

@@ -43,30 +43,31 @@ const ProductUpload = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [bookFile, setBookFile] = useState(null);
   const [resetGenres, setResetGenres] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const validateForm = () => {
     if (!title || !authorName || !description) {
-      toast.error("All fields are required");
+      toast.error("Đừng bỏ trống các thông tin!");
       return false;
     }
     if (!price || price <= 0) {
-      toast.error("Price must be greater than 0");
+      toast.error("Giá tiền phải lớn hơn 0!");
       return false;
     }
     if (typeBookId === 0) {
-      toast.error("Please select a type of book");
+      toast.error("Vui lòng chọn Type book");
       return false;
     }
     if (brandId.length === 0) {
-      toast.error("Please select at least one genre");
+      toast.error("Hãy chọn ít nhất 1 thể loại!");
       return false;
     }
     if (!imageFile) {
-      toast.error("Please upload an image");
+      toast.error("Hãy đăng file ảnh lên!");
       return false;
     }
     if (typeBookId !== 1 && !bookFile) {
-      toast.error("Ebook file is required for Ebook type");
+      toast.error("Cần phải tải Ebook file lên khi Type book là Ebook!");
       return false;
     }
     return true;
@@ -94,6 +95,12 @@ const ProductUpload = () => {
   const handleSubmit = async () => {
     if (!validateForm()) return;
 
+    setIsLoading(true);
+
+    if(typeBookId === 2){
+      setQuantity(20);
+    }
+
     const data = new FormData();
     data.append('ImageFile', imageFile);
     if (bookFile) data.append('EbookFile', bookFile);
@@ -107,15 +114,30 @@ const ProductUpload = () => {
     data.append('TypeBookId', typeBookId);
     data.append('AuthorName', authorName);
 
-    let res = await createProduct(data);
-    setResetGenres(true);
-    if (res) {
-      toast.success("Product added successfully!");
-      resetForm();
-    } else {
+    try {
+      let res = await createProduct(data);
+      setResetGenres(true);
+      if (res) {
+        toast.success("Product added successfully!");
+        resetForm();
+      } else {
+        toast.error("Error adding product!");
+      }
+    } catch (error) {
       toast.error("Error adding product!");
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  React.useEffect(() => {
+    if (typeBookId === 2) {
+      setQuantity(20);
+    }
+    else{
+      setQuantity(0);
+    }
+  }, [typeBookId]);
 
   const resetForm = () => {
     setTitle('');
@@ -153,6 +175,7 @@ const ProductUpload = () => {
                   type='file'
                   onChange={handleFileChange}
                   style={{ marginTop: '20px' }}
+                  disabled={isLoading}
                 />
                 {imagePreview && (
                   <img src={imagePreview} alt='Preview' style={{ marginTop: '20px', maxWidth: '100%', height: '450px' }} />
@@ -166,7 +189,7 @@ const ProductUpload = () => {
                   type='file'
                   onChange={handleFileBookChange}
                   style={{ marginTop: '20px' }}
-                  disabled={typeBookId !== 2}
+                  disabled={typeBookId !== 2 || isLoading}
                 />
               </div>
             </div>
@@ -175,31 +198,34 @@ const ProductUpload = () => {
                 <h5 className='mb-4'>Basic Information</h5>
                 <div className='form-group'>
                   <h6>Title</h6>
-                  <input type='text' value={title} onChange={(e) => setTitle(e.target.value)} />
+                  <input type='text' value={title} onChange={(e) => setTitle(e.target.value)} disabled={isLoading}/>
                 </div>
 
                 <div className='form-group'>
                   <h6>Author</h6>
-                  <input type='text' value={authorName} onChange={(e) => setAuthorName(e.target.value)} />
+                  <input type='text' value={authorName} onChange={(e) => setAuthorName(e.target.value)} disabled={isLoading}/>
                 </div>
 
                 <div className='form-group'>
                   <h6>Price</h6>
-                  <input type='number' value={price} onChange={(e) => setPrice(Number(e.target.value))} />
+                  <input type='number' value={price} onChange={(e) => setPrice(Number(e.target.value))} disabled={isLoading}/>
                 </div>
 
-                <div className='form-group'>
-                  <h6>Quantity</h6>
-                  <input
-                    type='number'
-                    value={quantity}
-                    onChange={(e) => setQuantity(Number(e.target.value))}
-                    min='0'
-                    onKeyDown={(e) => {
-                      if (['-', 'e', 'E'].includes(e.key)) e.preventDefault();
-                    }}
-                  />
-                </div>
+                {typeBookId !== 2 && (
+                  <div className='form-group'>
+                    <h6>Quantity</h6>
+                    <input
+                      type='number'
+                      value={quantity}
+                      onChange={(e) => setQuantity(Number(e.target.value))}
+                      min='0'
+                      onKeyDown={(e) => {
+                        if (['-', 'e', 'E'].includes(e.key)) e.preventDefault();
+                      }}
+                      disabled={isLoading}
+                    />
+                  </div>
+                )}
 
                 <div className='form-group'>
                   <h6>Description</h6>
@@ -208,6 +234,7 @@ const ProductUpload = () => {
                     onChange={(e) => setDescription(e.target.value)}
                     rows={5}
                     cols={10}
+                    disabled={isLoading}
                   />
                 </div>
 
@@ -220,6 +247,7 @@ const ProductUpload = () => {
                       displayEmpty
                       inputProps={{ 'aria-label': 'Without label' }}
                       className='w-100'
+                      disabled={isLoading}
                     >
                       <MenuItem value={0}><em>None</em></MenuItem>
                       <MenuItem value={1}>Nbook</MenuItem>
@@ -234,8 +262,8 @@ const ProductUpload = () => {
                 </div>
 
                 <div className='card mt-4'>
-                  <Button variant="contained" color="primary" onClick={handleSubmit}>
-                    Upload Product
+                  <Button variant="contained" color="primary" onClick={handleSubmit} disabled={isLoading}>
+                    {isLoading ? 'Uploading...' : 'Upload Product'}
                   </Button>
                 </div>
               </div>

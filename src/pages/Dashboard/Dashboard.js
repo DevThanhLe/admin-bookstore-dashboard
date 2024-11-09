@@ -21,7 +21,7 @@ import Select from '@mui/material/Select';
 import { MyContext } from '../../App';
 // import { Link } from 'react-router-dom';
 import DashboardProductTable from './components/dashboardProductTable';
-import GenreSelect from './components/GenreSelect';
+// import GenreSelect from './components/GenreSelect';
 
 
 const Dashboard = () => {
@@ -35,7 +35,7 @@ const Dashboard = () => {
 
     // const [brandBy, setbrandBy] = React.useState('');
     const [showBy, setshowBy] = React.useState('');
-    const [typeBy, settypeBy] = React.useState('');
+    // const [typeBy, settypeBy] = React.useState('');
 
     const context = useContext(MyContext)
 
@@ -55,9 +55,9 @@ const Dashboard = () => {
     //   const handleBrandChange = (event) => {
     //     setbrandBy(event.target.value);
     // };
-    const handleTypeChange = (event) => {
-        settypeBy(event.target.value);
-    };
+    // const handleTypeChange = (event) => {
+    //     settypeBy(event.target.value);
+    // };
 
     return (
         <div>
@@ -140,9 +140,9 @@ const Dashboard = () => {
                                     labelId="demo-simple-select-helper-label"
                                     className='w-100'
                                     >
-                                    {/* <MenuItem value="">
+                                    <MenuItem value="">
                                         <em>None</em>
-                                    </MenuItem> */}
+                                    </MenuItem>
                                     <MenuItem value={5}>5 rows</MenuItem>
                                     <MenuItem value={10}>10 rows</MenuItem>
                                     {/* <MenuItem value={20}>20 rows</MenuItem> */}
@@ -151,10 +151,10 @@ const Dashboard = () => {
                         </div>
 
                         {/* Brand select */}
-                        <div className='col-md-3'>
+                        {/* <div className='col-md-3'>
                             <h4>CATEROGIES BY</h4>
                             <GenreSelect/>
-                        </div>
+                        </div> */}
 
                         {/* Type select */}
                     {/*     <div className='col-md-3'>
@@ -211,10 +211,10 @@ const Dashboard = () => {
                         </div>
 
                         {/* Brand select */}
-                        <div className='col-md-3'>
+                        {/* <div className='col-md-3'>
                             <h4>CATEROGIES BY</h4>
                             <GenreSelect/>
-                        </div>
+                        </div> */}
 
                         {/* Type select */}
                         {/* <div className='col-md-3'>
