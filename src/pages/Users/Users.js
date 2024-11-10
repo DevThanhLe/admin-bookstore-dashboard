@@ -33,6 +33,12 @@ const StyledBreadcrumb = styled(Chip)(({ theme }) => {
 });
 
 const User = () => {
+    const [searchInput, setSearchInput] = React.useState('');
+
+    const handleSearchInput = (searchTerm) => {
+      setSearchInput(searchTerm)
+      // console.log(searchTerm); // Xử lý giá trị input từ Search component
+    };
     return (
         <div className='right-content w-100'>
 
@@ -49,7 +55,7 @@ const User = () => {
                 <div className='col-md-3'>
                     <h4>SEARCH</h4>
                     <div className='searchProductWrapper d-flex align-items-center'>
-                      <Search />
+                      <Search onSearch={handleSearchInput}/>
                     </div>
                 </div>
               </div>

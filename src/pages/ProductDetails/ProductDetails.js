@@ -23,6 +23,7 @@ import { updateProduct,unSaleProduct } from '../../services/ProductService';
 import { ToastContainer, toast } from 'react-toastify';
 import { FaLock } from "react-icons/fa";
 import { FaLockOpen } from "react-icons/fa";
+import 'react-toastify/dist/ReactToastify.css';
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
   const backgroundColor =
@@ -134,8 +135,9 @@ const ProductDetails = () => {
       // setResetGenres(true);
       if (res) {
         // toast.success("Product modified successfully!");
+        // toast.success("Sản phẩm đã được lưu thành công!", { autoClose: 5000 }); // autoClose sau 5 giây
+
         // resetForm();
-        toast.success("Sản phẩm đã được lưu thành công!");
         setOpenEdit(false);
       } else {
         toast.error("Gặp lỗi khi chỉnh sửa!");
@@ -315,7 +317,7 @@ const ProductDetails = () => {
         onSave={handleSaveChanges}
         product={productsData}
       />
-      <ToastContainer />
+      <ToastContainer autoClose={5000}/>
     </div>
   );
 }

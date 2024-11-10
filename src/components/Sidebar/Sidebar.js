@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import { MdSpaceDashboard } from "react-icons/md";
 import { FaAngleRight } from "react-icons/fa6";
-import { MdOutlineProductionQuantityLimits } from "react-icons/md";
+// import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 // import { IoCart } from "react-icons/io5";
 import { FaUsers } from "react-icons/fa";
-import { FaChartLine } from "react-icons/fa6";
+// import { FaChartLine } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 import { IoMdLogOut } from "react-icons/io";
 // import { useContext } from 'react';
@@ -13,8 +13,9 @@ import { IoMdLogOut } from "react-icons/io";
 import { PiNotepadFill } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
-
+import { BiSolidDiscount } from "react-icons/bi";
+import { FaCartFlatbed } from "react-icons/fa6";
+import { PiPresentationChartFill } from "react-icons/pi";
 
 const Sidebar = () => {
 
@@ -74,7 +75,7 @@ const Sidebar = () => {
                         <div>
                             <Button className={`w-100 d-flex justify-content-start align-items-center ${activeTab===2 && isToggleSubmenu === true ?'active':''}`} onClick={() => isOpenSubmenu(2)}>
                                 <span className='icon'>
-                                    <MdOutlineProductionQuantityLimits/>
+                                    <FaCartFlatbed/>
                                 </span>
                                 Products
                                 <span className='arrow'>
@@ -85,7 +86,7 @@ const Sidebar = () => {
                             <div className={`submenuWrapper ${activeTab===2 && isToggleSubmenu === true ?'colapse':'colapsed'}`}>
                                 <div className='submenu'>
                                     <li><Link to="/Products">Product List</Link></li>
-                                    <li><Link to="/Products/Details/1">Product View</Link></li>
+                                    {/* <li><Link to="/Products/Details/1">Product View</Link></li> */}
                                     <li><Link to="/Products/Upload">Product Upload</Link></li>
                                 </div>
                             </div>
@@ -103,11 +104,31 @@ const Sidebar = () => {
                                 </span>
                             </Button>
                         </Link>
+                        {/* Voucher button  */}
+                        <div>
+                            <Button className={`w-100 d-flex justify-content-start align-items-center ${activeTab===4 && isToggleSubmenu === true ?'active':''}`} onClick={() => isOpenSubmenu(4)}>
+                                <span className='icon'>
+                                    <BiSolidDiscount/>
+                                </span>
+                                Vouchers
+                                <span className='arrow'>
+                                    <FaAngleRight/>
+                                </span>
+                            </Button>
+
+                            <div className={`submenuWrapper ${activeTab===4 && isToggleSubmenu === true ?'colapse':'colapsed'}`}>
+                                <div className='submenu'>
+                                    <li><Link to="/Vouchers">Voucher List</Link></li>
+                                    {/* <li><Link to="/Products/Details/1">Product View</Link></li> */}
+                                    <li><Link to="/Vouchers/Create">Voucher Create</Link></li>
+                                </div>
+                            </div>
+                        </div>
                         {/* revenue button */}
                         <Link to="/Revenue">
                             <Button className='w-100 d-flex justify-content-start align-items-center'>
                                 <span className='icon'>
-                                    <FaChartLine/>
+                                    <PiPresentationChartFill/>
                                 </span>
                                 Revenue
                                 <span className='arrow'>
