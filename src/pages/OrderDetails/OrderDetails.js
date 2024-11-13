@@ -1,63 +1,20 @@
 import { Breadcrumbs } from '@mui/material';
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { FaHome } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { emphasize, styled } from '@mui/material/styles';
 import Chip from '@mui/material/Chip';
 import Button from '@mui/material/Button';
 import { FaPencil } from "react-icons/fa6";
-import { IoTrashBin } from "react-icons/io5";
-import { Link } from 'react-router-dom';
-
-const orderData = {
-  "orderId": 1,
-  "orderDate": "2024-11-09T13:27:54.72",
-  "totalAmount": 134500,
-  "name": "Pham Trường Đức",
-  "status": "Processing",
-  "phone": "string",
-  "address": "string",
-  "orderItems": [
-    {
-      "quantity": 1,
-      "booksDto": {
-        "bookId": 6,
-        "title": "Don't worry ! you're still fine",
-        "price": 45000,
-        "image": "https://firebasestorage.googleapis.com/v0/b/bookstore-59884.appspot.com/o/images%2F5b6f821b-e582-4a5a-a548-5db4617f56f2.webp?alt=media&token=49d40d95-58cf-4d63-95c7-65b21a7e95a9",
-        "authorName": "Jason Adam Katzenstein",
-        "isSale": 1,
-        "rating": 2.5,
-        "brandNames": [
-          "Psychology",
-          "Philosophy"
-        ]
-      }
-    },
-    {
-      "quantity": 1,
-      "booksDto": {
-        "bookId": 5,
-        "title": "Crime scene cleaner",
-        "price": 89500,
-        "image": "https://firebasestorage.googleapis.com/v0/b/bookstore-59884.appspot.com/o/images%2F09b731ac-1998-4e2f-b24c-740c4ed39b8c.webp?alt=media&token=245fe202-b84f-4903-8e61-085da6a7357c",
-        "authorName": "LapLap",
-        "isSale": 1,
-        "rating": 4.5,
-        "brandNames": [
-          "Horror",
-          "Science"
-        ]
-      }
-    }
-    
-  ]
-}
+// import { IoTrashBin } from "react-icons/io5";
+import { Link, useParams } from 'react-router-dom';
+import { getOrderDetailsById, updateStatus } from '../../services/OrderService';
+import EditDialog from './component/EditDialog';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 const formatDate = (dateString) => {
-  // const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
-  const options = { day: 'numeric', month: 'numeric',year: 'numeric' };
-  // return new Date(dateString).toLocaleDateString(undefined, options);
+  const options = { day: 'numeric', month: 'numeric', year: 'numeric' };
   return new Date(dateString).toLocaleDateString('vi-VN', options);
 };
 
@@ -82,38 +39,77 @@ const StyledBreadcrumb = styled(Chip)(({ theme }) => {
 });
 
 const OrderItemsStructure = ({ id, name, price, image, quantity, rating }) => {
+  const finalPrice = price * quantity;
   return (
-    // <Link className="row mt-2" to={`/Products/Details/${id}`}>
-    //   <div className='col-sm-5'>
-    //     <img src={image} alt='Product' className='product-image' />
-    //   </div>
-    //   <div className='col-sm-7 order-detail mb-3 mt-2'>
-    //     <h5>{name}</h5>
-    //     <h6>Quantity</h6>
-    //     <input className='w-100 p-2 mb-2' type='number' min='1' value={quantity} readOnly/>
-    //     <h6>Price</h6>
-    //     <input className='w-100 p-2' type='text' value={price} readOnly/>
-    //   </div>
-    // </Link>
     <Link className="product-order" to={`/Products/Details/${id}`}>
       <img src={image} alt={name} />
       <h2>{name}</h2>
       <div className="product-rating">
-        {/* {'★'.repeat(roundedRating)}{'☆'.repeat(5 - roundedRating)} */}
-        {rating} ★
-        {/* <span>({reviews} reviews)</span> */}
+        {(rating ?? 5)} ★
         <span>({quantity} items)</span>
       </div>
-      
       <p className="product-price">
-        {/* <span className="original-price">${originalPrice}</span> ${price} */}
-        <span className="original-price">{price.toLocaleString('vi-VN')} đ</span>
+        <span className="original-price">{finalPrice.toLocaleString('vi-VN')} đ</span>
       </p>
     </Link>
   );
-}
+};
 
 const OrderDetails = () => {
+  const { id } = useParams();
+  const [orderData, setOrderData] = useState({ orderItems: [] }); 
+
+  const [open, setOpen] = useState(false);
+  const [current, setCurrent] = useState(null);
+
+  const [newStatus, setNewStatus] = useState("");
+
+
+  const getOrderDetails = useCallback(async () => {
+    try {
+      const res = await getOrderDetailsById(id);
+      if (res && res.data) {
+        setOrderData(res.data);
+        console.log(res.data);
+      }
+    } catch (error) {
+      console.error('Error fetching order data:', error);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    getOrderDetails();
+  }, [getOrderDetails]);
+
+  const handleClickOpen = (order) => {
+      setCurrent(order);
+      setOpen(true);
+  };
+
+  const handleClose = () => {
+      setOpen(false);
+  };
+
+  const handleSave = async () => {
+    try {
+        if (current) {
+            let res = await updateStatus(current.orderId, newStatus);
+            if (res) {
+                setOpen(false);
+                toast.success("Thay đổi Status của Order thành công!");
+            }
+        }
+    } catch (error) {
+        toast.error("Lỗi khi thay đổi Status!");
+    } finally {
+      getOrderDetails();
+    }
+  };
+
+  const handleStatusChange = (status) => {
+    setNewStatus(status);
+  };
+
   return (
     <div>
       <div className='right-content w-100'>
@@ -131,32 +127,32 @@ const OrderDetails = () => {
             <h5 className='mb-3'>Order's Information</h5>
             <div className='col-sm-6 order-detail mb-3'>
               <h6>User's full name</h6>
-              <input className='w-100 p-2' type='text' value={orderData.name} readOnly/>
+              <input className='w-100 p-2' type='text' value={orderData.name || ''} readOnly />
             </div>
             <div className='col-sm-6 order-detail mb-3'>
               <h6>Phone</h6>
-              <input className='w-100 p-2' type='text' value={orderData.phone} readOnly/>
+              <input className='w-100 p-2' type='text' value={orderData.phone || ''} readOnly />
             </div>
             <div className='col-sm-6 order-detail mb-3'>
               <h6>Address</h6>
-              <input className='w-100 p-2' type='text' value={orderData.address} readOnly/>
+              <input className='w-100 p-2' type='text' value={orderData.address || ''} readOnly />
             </div>
             <div className='col-sm-6 order-detail mb-3'>
               <h6>Order's Date</h6>
-              <input className='w-100 p-2' type='text' value={formatDate(orderData.orderDate)} readOnly/>
+              <input className='w-100 p-2' type='text' value={orderData.orderDate ? formatDate(orderData.orderDate) : ''} readOnly />
             </div>
             <div className='col-sm-6 order-detail mb-3'>
               <h6>Status</h6>
-              <input className='w-100 p-2' type='text' value={orderData.status} readOnly/>
+              <input className='w-100 p-2' type='text' value={orderData.status || ''} readOnly />
             </div>
             <div className='col-sm-6 order-detail mb-3'>
               <h6>Total</h6>
-              <input className='w-100 p-2' type='text' value={orderData.totalAmount.toLocaleString('vi-VN') + ' đ'} readOnly/>
+              <input className='w-100 p-2' type='text' value={orderData.totalAmount ? orderData.totalAmount.toLocaleString('vi-VN') + ' đ' : ''} readOnly />
             </div>
           </div>
           <div className='buttonWrapper d-flex justify-content-end pt-3'>
-            <Button className="me-2" color="success" variant="contained"><FaPencil /></Button>
-            <Button color="error" variant="contained"><IoTrashBin /></Button>
+            <Button className="me-2" color="success" variant="contained" onClick={() => handleClickOpen(orderData)}><FaPencil /></Button>
+            {/* <Button color="error" variant="contained"><IoTrashBin /></Button> */}
           </div>
         </div>
 
@@ -177,6 +173,16 @@ const OrderDetails = () => {
           </div>
         </div>
       </div>
+      {/* edit dialog  */}
+      <EditDialog
+          open={open}
+          handleClose={handleClose}
+          current={current}
+          setCurrent={setCurrent}
+          handleSave={handleSave}
+          onStatusChange={handleStatusChange}
+      />
+      <ToastContainer />
     </div>
   );
 }

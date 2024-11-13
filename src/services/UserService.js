@@ -4,7 +4,7 @@ import axios from "./AxiosCustom";
 
 const fetchAllUsers = (page) => {
   return axios.get(
-    `api/User?pageNumber=${page}&pageSize=10`
+    `api/User/all-user?pageNumber=${page}&pageSize=10`
     // ,
     // {
     //   headers: {
@@ -15,3 +15,22 @@ const fetchAllUsers = (page) => {
 };
 
 export { fetchAllUsers };
+
+const searchUsers = (input,phone,page) => {
+  return axios.get(
+    `api/User/filter-user?Email=${input}&Phone=${phone}&pageNumber=${page}&pageSize=10`
+    // ,
+    // {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // }
+  );
+};
+
+export { searchUsers };
+
+const unActiveUser = (id) => {
+  return axios.put(`api/User/delete?id=${id}`);
+};
+export { unActiveUser };

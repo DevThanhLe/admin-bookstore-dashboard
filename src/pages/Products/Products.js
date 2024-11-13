@@ -121,6 +121,7 @@
         } else {
             // Else, call searchProducts with current search and filter values
             try {
+                setCurrentPage(1);
                 const res = await searchProducts(brandIdList, searchInput, currentPage);
                 if (res) {
                     setProductsData(res.data.items);

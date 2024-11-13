@@ -64,7 +64,7 @@ function App() {
               <Route path="/Users" exact={true} element={<User/>}/>
               <Route path="/Orders" exact={true} element={<Orders/>}/>
               <Route path="/Revenue" exact={true} element={<Revenue/>}/>
-              <Route path="/Orders/Details" exact={true} element={<OrderDetails/>}/>
+              <Route path="/Orders/Details/:id" exact={true} element={<OrderDetails/>}/>
               <Route path="/Vouchers/Create" exact={true} element={<VoucherCreate/>}/>
               <Route path="/Vouchers" exact={true} element={<Vouchers/>}/>
 

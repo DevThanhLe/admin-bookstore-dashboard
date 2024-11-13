@@ -17,6 +17,7 @@ import GenreSelect from './GenreSelect';
 const EditBookDialog = ({ open, onClose, onSave, product }) => {
   const [title, setTitle] = useState(product.title);
   const [authorName, setAuthorName] = useState(product.authorName);
+  // const [authorName, setAuthorName] = useState(product.author_name);
   const [quantity, setQuantity] = useState(product.quantity);
   const [typeBookId, setTypeBookId] = useState(product.typeBookId);
   const [price, setPrice] = useState(product.price);

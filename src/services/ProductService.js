@@ -67,10 +67,22 @@ const getProductById = (id) => {
 export { getProductById };
 
 
+const getLowStock = (page) => {
+  return axios.get(`api/Book/low-stock?page=${page}&size=5`);
+};
+export { getLowStock };
+
+
+
 const unSaleProduct = (id) => {
-  return axios.put(`api/Book/delete?id=${id}`);
+  return axios.put(`api/Book/hidden?id=${id}`);
 };
 export { unSaleProduct };
+
+const saleProduct = (id) => {
+  return axios.put(`api/Book/visible?id=${id}`);
+};
+export { saleProduct };
 
 // Search Sản phẩm
 // const searchAllProduct = (brandId,nameInput) => {

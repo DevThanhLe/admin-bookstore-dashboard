@@ -11,12 +11,7 @@ import { Breadcrumbs } from '@mui/material';
 import { emphasize, styled } from '@mui/material/styles';
 import Chip from '@mui/material/Chip';
 import OrderTable from './components/OrderTable';
-import {TextField} from '@mui/material';
-import Search from '../../components/Search/Search';
-// import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
     const backgroundColor =
@@ -39,8 +34,8 @@ const StyledBreadcrumb = styled(Chip)(({ theme }) => {
 });
 
 const Orders = () => {
-    const currentYear = new Date().getFullYear();
-    const maxDate = `${currentYear}-12`; // Giới hạn là tháng 12 của năm hiện tại
+
+
     return (
         <div className='right-content w-100'>
 
@@ -52,46 +47,12 @@ const Orders = () => {
                     </Breadcrumbs>
             </div>
 
-            <div className='card shadow border-0 p-3 mt-4'>
+            {/* <div className='card shadow border-0 p-3 mt-4'> */}
 
                 {/* table product data */}
-                <div className='row cardFilters d-flex align-items-center'>
-                  <div className='col-md-3'>
-                      <h4>SEARCH</h4>
-                      <div className='searchProductWrapper d-flex align-items-center'>
-                        <Search />
-                      </div>
-                  </div>
-      
-                  <div className='col-md-3'>
-                    <h4>ORDER TIME</h4>
-                    <TextField size='small' className='w-100 selectCustomBorder' type="month" fullWidth inputProps={{ max: maxDate }}/>
-                  </div>
-
-                  <div className='col-md-3'>
-                    <h4>ORDER STATUS</h4>
-                    <FormControl size='small' className='w-100'>
-                      <Select
-                          // value={typeBy}
-                          // onChange={handleTypeChange}
-                          displayEmpty
-                          inputProps={{ 'aria-label': 'Without label' }}
-                          className='w-100'
-                          >
-                          {/* <MenuItem value="">
-                              <em>None</em>
-                          </MenuItem> */}
-                          <MenuItem value={10}>Đang xử lý</MenuItem>
-                          <MenuItem value={20}>Đã xuất kho</MenuItem>
-                          <MenuItem value={30}>Đang giao</MenuItem>
-                          <MenuItem value={40}>Hoàn thành</MenuItem>
-                          <MenuItem value={50}>Hủy</MenuItem>
-                      </Select>
-                  </FormControl>
-                  </div>
-                </div>
-                <OrderTable/>
-            </div>
+                
+            <OrderTable/>
+            {/* </div> */}
         </div>
     );
 };

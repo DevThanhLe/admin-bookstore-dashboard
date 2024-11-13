@@ -19,7 +19,7 @@ import { useEffect, useCallback } from "react";
 import DeleteDialog from './components/DeleteDialog';
 import { BsFillBookmarkStarFill } from "react-icons/bs";
 import EditBookDialog from './components/EditBookDialog';
-import { updateProduct,unSaleProduct } from '../../services/ProductService';
+import { updateProduct,unSaleProduct, saleProduct } from '../../services/ProductService';
 import { ToastContainer, toast } from 'react-toastify';
 import { FaLock } from "react-icons/fa";
 import { FaLockOpen } from "react-icons/fa";
@@ -170,6 +170,23 @@ const ProductDetails = () => {
     }
   };
 
+  const handleUnDelete = async () => {
+    try {
+      let res = await saleProduct(productsData.bookId);
+      if(res){
+        setOpen(false);
+        toast.success("Sản phẩm đã được mở bán lại!");
+      }
+      // console.log("Sản phẩm đã được xóa");
+      // navigate('/Products');  // Chuyển hướng đến trang /Products
+    } catch (error) {
+      console.error("Lỗi khi mở bán sản phẩm:", error);
+    }
+    finally {
+      getProductDetails();
+    }
+  };
+
   return (
     <div>
       <div className='right-content w-100'>
@@ -200,7 +217,18 @@ const ProductDetails = () => {
             <div className='rightcontent col-md-6'>
               <div className='pt-3 pb-3 pe-4'>
                 <h6 className='mb-4'>Product Details</h6>
-                <h4>{productsData.title}</h4>
+                {/* <h4>{productsData.title}</h4> */}
+                <h4>
+                  {productsData.title}{" "}
+                  <span
+                    style={{
+                      fontWeight: "bold",
+                      color: productsData.isSale ? "green" : "red"
+                    }}
+                  >
+                    ({productsData.isSale ? "Đang bán" : "Ngưng bán"})
+                  </span>
+                </h4>
 
                 <div className='productInfo mt-3'>
                   {/* Author */}
@@ -211,6 +239,7 @@ const ProductDetails = () => {
                     </div>
                     <div className='col-sm-7'>
                       <span className='name'>{productsData.authorName}</span>
+                      {/* <span className='name'>{productsData.author_name}</span> */}
                     </div>
                   </div>
 
@@ -297,7 +326,7 @@ const ProductDetails = () => {
                   </Button>
                 ) : (
                   // <Button className="error" color="warning" onClick={handleClickOpen}>
-                  <Button className="warning" color="warning">
+                  <Button className="warning" color="warning" onClick={handleClickOpen}>
                     <FaLockOpen />
                   </Button>
                 )}
@@ -307,10 +336,11 @@ const ProductDetails = () => {
         </div>
       </div>
       <DeleteDialog
-        open={open}
-        onClose={handleClose}
-        onDelete={handleDelete}
-      />
+          open={open}
+          onClose={handleClose}
+          handleDelete={productsData.isSale ? handleDelete : handleUnDelete}
+          isSale={productsData.isSale}
+        />
       <EditBookDialog
         open={openEdit}
         onClose={handleEditClose}

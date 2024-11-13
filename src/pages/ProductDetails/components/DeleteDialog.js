@@ -6,21 +6,23 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 
-const DeleteDialog = ({ open, onClose, onDelete }) => {
+const DeleteDialog = ({ open, onClose, handleDelete, isSale }) => {
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Xác nhận xóa</DialogTitle>
+      <DialogTitle>
+        {isSale ? "Ngưng bán sản phẩm" : "Mở bán lại sản phẩm"}
+      </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Bạn có chắc chắn muốn ngừng bán sản phẩm này không?
+          {isSale
+            ? "Bạn có chắc chắn muốn ngưng bán sản phẩm này không?"
+            : "Bạn có chắc chắn muốn mở bán lại sản phẩm này không?"}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="primary">
-          Hủy
-        </Button>
-        <Button onClick={onDelete} color="primary" autoFocus>
-          Xóa
+        <Button onClick={onClose}>Hủy</Button>
+        <Button onClick={handleDelete} color="primary">
+          {isSale ? "Ngưng bán" : "Mở bán lại"}
         </Button>
       </DialogActions>
     </Dialog>

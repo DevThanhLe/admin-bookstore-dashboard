@@ -772,7 +772,15 @@ table tbody .custom-td-product{
   padding-bottom: 20px;
 }
 
+.tableFooterDashboard{
+  padding-bottom: 10px;
+}
+
 .tableFooter .pagination{
+  margin-left: auto;
+}
+
+.tableFooterDashboard .pagination{
   margin-left: auto;
 }
 
@@ -1192,3 +1200,12 @@ table tbody .custom-td-product{
   border-radius: 4px;
 }
 
+.warning{
+  background: rgba(255, 223, 128, 0.6) !important;
+
+}
+
+.clear-btn{
+  margin-top: 35px !important;
+  width: 25px !important;
+}
