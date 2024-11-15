@@ -16,8 +16,8 @@ import GenreSelect from './GenreSelect';
 
 const EditBookDialog = ({ open, onClose, onSave, product }) => {
   const [title, setTitle] = useState(product.title);
-  const [authorName, setAuthorName] = useState(product.authorName);
-  // const [authorName, setAuthorName] = useState(product.author_name);
+  // const [authorName, setAuthorName] = useState(product.authorName);
+  const [authorName, setAuthorName] = useState(product.author_name);
   const [quantity, setQuantity] = useState(product.quantity);
   const [typeBookId, setTypeBookId] = useState(product.typeBookId);
   const [price, setPrice] = useState(product.price);
@@ -26,11 +26,12 @@ const EditBookDialog = ({ open, onClose, onSave, product }) => {
   const [previewImage, setPreviewImage] = useState(product.image);
   const [file, setFile] = useState(null); // State cho file doc/pdf
   const [brandId, setBrandId] = useState([]);
+  const [ebookFile, setEbookFile] = useState(product.linkEbook);
 
   useEffect(() => {
     if (open) {
       setTitle(product.title);
-      setAuthorName(product.authorName);
+      setAuthorName(product.author_name);
       setQuantity(product.quantity);
       setTypeBookId(product.typeBookId);
       setPrice(product.price);
@@ -39,6 +40,7 @@ const EditBookDialog = ({ open, onClose, onSave, product }) => {
       setPreviewImage(product.image);
       setFile(null); // Reset file doc/pdf
       setBrandId([]);
+      setEbookFile(product.linkEbook);
     }
   }, [open, product]);
 
@@ -79,6 +81,11 @@ const EditBookDialog = ({ open, onClose, onSave, product }) => {
 
     if (brandId.length === 0) {
       toast.error("Vui lòng chọn ít nhất 1 thể loại cho sách trước khi lưu!");
+      return;
+    }
+
+    if(ebookFile === null && typeBookId === 2){
+      toast.error("Vui lòng đăng file book để có thể bán Ebook!");
       return;
     }
 
@@ -125,7 +132,7 @@ const EditBookDialog = ({ open, onClose, onSave, product }) => {
             {typeBookId === 2 && (
               <>
                 <Button variant="contained" component="label" fullWidth style={{ marginTop: 10 }}>
-                  Upload Document (PDF or DOC)
+                  Upload Book (PDF or DOC)
                   <input type="file" hidden onChange={handleFileChange} accept=".pdf,.doc,.docx" />
                 </Button>
 

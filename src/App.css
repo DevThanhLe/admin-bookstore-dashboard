@@ -709,13 +709,13 @@ table td .info-address h6{
   margin-bottom: 5px;
 } */
 
-table.v-align td .productBox{
+/* table.v-align td .productBox{
   width: 100%;
 }
 
 table.v-align td .productBox .info{
   width: 280px;
-}
+} */
 
 table.v-align td .userBox{
   width: 100%;
@@ -762,9 +762,16 @@ table tbody .custom-td-userAddress{
   width: 600px;
 }
 /* ================================ */  
-
 table tbody .custom-td-product{
-  width: 350px;
+  width: 300px;
+
+}
+
+table tbody .custom-td-product h6{
+  white-space: nowrap;      /* Prevents text from wrapping to the next line */
+  overflow: hidden;         /* Ensures that overflowed text is clipped */
+  text-overflow: ellipsis;  /* Adds '...' for overflowed text */
+  max-width: 250px;   
 }
 
 
@@ -1208,4 +1215,18 @@ table tbody .custom-td-product{
 .clear-btn{
   margin-top: 35px !important;
   width: 25px !important;
+}
+
+.custom-border .MuiOutlinedInput-root {
+  &.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: #000;
+  }
+}
+
+.custom-border .MuiSelect-outlined {
+  border-color: #000;
+}
+
+.custom-border .MuiOutlinedInput-notchedOutline {
+  border-color: #000;
 }

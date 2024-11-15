@@ -45,7 +45,7 @@ const searchOrders = (searchPhone, orderMonth, orderYear, statusName, page) => {
   const params = new URLSearchParams();
 
   if (searchPhone) {
-    params.append('name', searchPhone);
+    params.append('phone', searchPhone);
   }
   if (orderMonth) {
     params.append('month', orderMonth);

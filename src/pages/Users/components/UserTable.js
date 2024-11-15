@@ -8,7 +8,7 @@ import { FaPencil } from "react-icons/fa6";
 // import { fetchAllUsers } from '../../../services/UserService';
 // import { FaEye } from "react-icons/fa";
 import DeleteDialog from './DeleteDialog';
-import { unActiveUser } from '../../../services/UserService';
+import { unActiveUser, activeUser, updateUser } from '../../../services/UserService';
 import { ToastContainer, toast } from 'react-toastify';
 import { FaLock } from "react-icons/fa";
 import { FaLockOpen } from "react-icons/fa";
@@ -18,9 +18,9 @@ const UserTable = ({usersData, onSuccess}) => {
     // const token = localStorage.getItem("token");
     const [open, setOpen] = React.useState(false); // Open delete dialog
     const [selectedUserId, setSelectedUserId] = React.useState(0); // Lưu userId được chọn
-    const [isAcitiveUser, setIsAcitiveUser] = React.useState(1); // Lưu userId được chọn
+    const [isAcitiveUser, setIsAcitiveUser] = React.useState(-1); // Lưu userId được chọn
     const [openEdit, setOpenEdit] = React.useState(false);
-    const [selectedUser, setSelectedUser] = React.useState(null);
+    const [selectedUser, setSelectedUser] = React.useState(null)
 
     const handleClickOpen = (userId) => {
         const user = usersData.find(user => user.userId === userId);
@@ -37,43 +37,38 @@ const UserTable = ({usersData, onSuccess}) => {
         setOpen(false);
     };
 
-    const handleDelete = async (selectedUserId) => {
+    const handleDelete = async () => {
         try {
           let res = await unActiveUser(selectedUserId);
           if(res){
             setOpen(false);
             toast.success("Khóa tài khoản thành công!");
           }
-          // console.log("Sản phẩm đã được xóa");
-          // navigate('/Products');  // Chuyển hướng đến trang /Products
         } catch (error) {
           console.error("Lỗi khi khóa tài khoản:", error);
         }
         finally {
-        //   getProductDetails();
             setSelectedUserId(null);
-            setIsAcitiveUser(1);
+            setIsAcitiveUser(-1);
             onSuccess(true);
         }
     };
     
     const handleUnDelete = async () => {
-        console.log("Mở khóa");
-        setOpen(false);
-        // try {
-        //     let res = await saleProduct(productsData.bookId);
-        //     if(res){
-        //     setOpen(false);
-        //     toast.success("Sản phẩm đã được mở bán lại!");
-        //     }
-        //     // console.log("Sản phẩm đã được xóa");
-        //     // navigate('/Products');  // Chuyển hướng đến trang /Products
-        // } catch (error) {
-        //     console.error("Lỗi khi mở bán sản phẩm:", error);
-        // }
-        // finally {
-        //     getProductDetails();
-        // }
+        try {
+            let res = await activeUser(selectedUserId);
+            if(res){
+              setOpen(false);
+              toast.success("Mở khóa tài khoản thành công!");
+            }
+          } catch (error) {
+            console.error("Lỗi khi mở khóa tài khoản:", error);
+          }
+          finally {
+              setSelectedUserId(null);
+              setIsAcitiveUser(-1);
+              onSuccess(true);
+          }
     };
 
     const activeType = (type) => {
@@ -82,8 +77,6 @@ const UserTable = ({usersData, onSuccess}) => {
             return "Đang hoạt động";
           case 0:
             return "Đã bị khóa";
-          // case 3:
-          //   return "Nbook and Ebook";
           default:
             return "Unknown";
         }
@@ -98,23 +91,19 @@ const UserTable = ({usersData, onSuccess}) => {
         setOpenEdit(false);
     };
 
-    const handleSaveEdit = (userId, formData) => {
-        console.log(formData);
+    const handleSaveEdit = async (userId, formData) => {
+        try {
+            let res = await updateUser(userId, formData);
+            if (res) {
+                toast.success("Cập nhật người dùng thành công!");
+                setOpenEdit(false);
+                onSuccess(true);
+            }
+        } catch (error) {
+            console.error("Lỗi khi cập nhật người dùng:", error);
+            toast.error("Cập nhật người dùng thất bại!");
+        }
     }
-    // const handleSaveEdit = async (userId, formData) => {
-    //     // try {
-    //     //     const res = await updateUser(userId, formData);
-    //     //     if (res) {
-    //     //         toast.success("Cập nhật thông tin người dùng thành công!");
-    //     //         onSuccess(true); // Refresh list
-    //     //     }
-    //     // } catch (error) {
-    //     //     console.error("Lỗi khi cập nhật người dùng:", error);
-    //     // } finally {
-    //     //     handleCloseEdit();
-    //     // }
-    // };
-    
 
     return (
         <div className='table-responsive mt-4'>
@@ -142,22 +131,16 @@ const UserTable = ({usersData, onSuccess}) => {
                             <td className='center-text' style={{ maxWidth: "100px" }}>{user.phone}</td>
                             <td className='center-text' style={{ maxWidth: "150px" }}>{user.address}</td>
                             <td className='center-text' style={{ maxWidth: "150px", color: user.isActive === 1 ? 'green' : 'red' }}>{activeType(user.isActive)}</td>
-                            {/* <td className='center-text'>{new Date(order.orderDate).toLocaleDateString('en-GB')}</td> */}
                             <td className='custom-td p-0 w-1'>
                                 <div className='actions d-flex align-items-center justify-content-between'>
-                                    {/* <Button className="secondary" color="secondary"><FaEye /></Button> */}
-                                    {/* <Button className="success" color="success" onClick={() => handleClickOpen(user)} aria-hidden="false" ><FaPencil /></Button> */}
-                                    {/* <Button className="success" color="success" aria-hidden="false" ><FaPencil /></Button> */}
                                     <Button className="success" color="success" onClick={() => handleClickOpenEdit(user)} aria-hidden>
                                         <FaPencil />
                                     </Button>
-                                    {/* <Button className="error" color="error" onClick={() => handleClickOpen(user.userId)}><IoTrashBin /></Button> */}
                                     {user.isActive === 1 ? (
                                         <Button className="error" color="error" onClick={() => handleClickOpen(user.userId)}>
                                             <FaLock />
                                         </Button>
                                         ) : (
-                                        // <Button className="error" color="warning" onClick={handleClickOpen}>
                                         <Button className="warning" color="warning" onClick={() => handleClickOpen(user.userId)}>
                                             <FaLockOpen />
                                         </Button>
@@ -167,41 +150,19 @@ const UserTable = ({usersData, onSuccess}) => {
                         </tr>
                     ))}
                 </tbody>
-
-
             </table>
-            {/* Pagination
-                <div className="d-flex tableFooter">
-                    <Pagination
-                        count={totalPages}
-                        page={currentPage}
-                        onChange={handleChangePage}
-                        className='pagination'
-                        showFirstButton
-                        showLastButton
-                    />
-                </div> */}
-                {/* edit dialog  */}
-                {/* <EditDialog
-                    open={open}
-                    handleClose={handleClose}
-                    current={current}
-                    setCurrent={setCurrent}
-                    handleSave={handleSave}
-                /> */}
-                <DeleteDialog
-                    open={open}
-                    onClose={handleClose}
-                    handleDelete={isAcitiveUser ? () => handleDelete(selectedUserId) : handleUnDelete}
-                    isActive={isAcitiveUser}
-                />
-                <EditDialog
-                    open={openEdit}
-                    onClose={handleCloseEdit}
-                    user={selectedUser}
-                    onSave={handleSaveEdit}
-                />
-
+            <DeleteDialog
+                open={open}
+                onClose={handleClose}
+                handleDelete={isAcitiveUser === 1 ? handleDelete : handleUnDelete}
+                isActive={isAcitiveUser}
+            />
+            <EditDialog
+                open={openEdit}
+                onClose={handleCloseEdit}
+                user={selectedUser}
+                onSave={handleSaveEdit}
+            />
             <ToastContainer/>
         </div>
     );

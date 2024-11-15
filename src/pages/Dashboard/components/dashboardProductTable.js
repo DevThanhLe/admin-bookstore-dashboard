@@ -38,7 +38,7 @@ const DashboardProductTable = ({productsData}) => {
                                     </div>
                                 </div>
                             </td>
-                            <td className='center-text' style={{ maxWidth: "100px" }}>{product.booksDto.authorName}</td>
+                            <td className='center-text' style={{ maxWidth: "100px" }}>{product.booksDto.author_name}</td>
                             <td className='center-text' style={{ maxWidth: "80px" }}>{product.booksDto.price.toLocaleString('vi-VN')} VND</td>
                             <td className='center-text'>{product.booksDto.rating ?? 5} ★</td>
                             <td className='center-text' style={{ maxWidth: "20px" }}>{product.quantity}</td>

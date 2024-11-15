@@ -166,7 +166,7 @@ const OrderTable = () => {
                         <TextField
                             size='small'
                             id="outlined-basic"
-                            className='w-50 me-2'
+                            className='w-50 me-2 custom-border'
                             type="number"
                             label="Year"
                             value={orderYear}
@@ -181,7 +181,7 @@ const OrderTable = () => {
                         <TextField
                             size='small'
                             id="outlined-basic"
-                            className='w-50 me-2'
+                            className='w-50 me-2 custom-border'
                             type="number"
                             label="Month"
                             value={orderMonth}
@@ -198,7 +198,7 @@ const OrderTable = () => {
 
                 <div className='col-md-3'>
                     <h4>ORDER STATUS</h4>
-                    <FormControl size='small' className='w-100'>
+                    <FormControl size='small' className='w-100 custom-border'>
                         <Select
                             // value={typeBy}
                             // onChange={handleTypeChange}

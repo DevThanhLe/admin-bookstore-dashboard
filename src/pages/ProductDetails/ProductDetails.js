@@ -238,8 +238,8 @@ const ProductDetails = () => {
                       <span className='name fw-bold'>Author</span>
                     </div>
                     <div className='col-sm-7'>
-                      <span className='name'>{productsData.authorName}</span>
-                      {/* <span className='name'>{productsData.author_name}</span> */}
+                      {/* <span className='name'>{productsData.authorName}</span> */}
+                      <span className='name'>{productsData.author_name}</span>
                     </div>
                   </div>
 

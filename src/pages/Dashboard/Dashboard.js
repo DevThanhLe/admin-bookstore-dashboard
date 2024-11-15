@@ -118,9 +118,9 @@ const Dashboard = () => {
                     <div className='col-md-8 pe-0'>
                         <div className='dashboardBoxWrapper d-flex'>
                             <DashboardBox color={["#1e3a8a","#93c5fd"]} content="Total User" totalNumber={data.userCount} icon={<FaUserCircle/>} growRate={true}/>
-                            <DashboardBox color={["#6d28d9","#d8b4fe"]} content="Total Products" totalNumber={data.bookCount} icon={<FiShoppingBag/>} growRate={false}/>
+                            <DashboardBox color={["#6d28d9","#d8b4fe"]} content="Total Products" totalNumber={data.bookCount} icon={<FiShoppingBag/>} growRate={true}/>
                             <DashboardBox color={["#be185d","#f9a8d4"]} content="Total Orders" totalNumber={data.orderCount} icon={<MdOutlineEventNote/>} growRate={true}/>
-                            <DashboardBox color={["#ea580c","#fdba74"]} content="Total Reviews" totalNumber="1345" icon={<MdOutlineReviews/>} growRate={false}/>
+                            <DashboardBox color={["#ea580c","#fdba74"]} content="Total Reviews" totalNumber={data.reviewCount} icon={<MdOutlineReviews/>} growRate={true}/>
                         </div>
                     </div>
 

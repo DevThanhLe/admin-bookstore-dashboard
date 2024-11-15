@@ -139,6 +139,7 @@ const dashboardTable = ({productsData}) => {
                         <th className='bg-dark text-white'>Book</th>
                         <th className='bg-dark text-white'>Author</th>
                         <th className='bg-dark text-white'>Type Book</th>
+                        <th className='bg-dark text-white'>Inventory</th>
                         <th className='bg-dark text-white'>Price</th>
                         <th className='bg-dark text-white'>Rating</th>
                         {/* <th className='bg-dark text-white'>Status</th> */}
@@ -151,7 +152,7 @@ const dashboardTable = ({productsData}) => {
                     {productsData.map(product => (
                         <tr key={product.bookId}>
                             <td className='center-text' >#{product.bookId}</td>
-                            <td className='custom-td-product' style={{ maxWidth: "270px" }}>
+                            <td className='custom-td-product'>
                                 <div className='d-flex productBox'>
                                     <div className='imgWrapper'>
                                         <img src={product.image} alt='bookImg'/>
@@ -163,7 +164,7 @@ const dashboardTable = ({productsData}) => {
                             </td>
                             <td className='center-text' style={{ maxWidth: "130px" }}>{product.author_name}</td>
                             <td className='center-text' style={{ maxWidth: "150px" }}>{bookType(product.typeBookId)}</td>
-
+                            <td className='center-text' style={{ maxWidth: "150px", color: "red" }}>{product.quantity}</td>
                             <td className='center-text' style={{ maxWidth: "100px" }}>{product.price.toLocaleString('vi-VN')} VND</td>
                             <td className='center-text' style={{ maxWidth: "100px" }}>{product.rating ?? 5} ★</td>
                             {/* <td className='center-text' style={{ maxWidth: "150px" }}>{user.address}</td> */}
