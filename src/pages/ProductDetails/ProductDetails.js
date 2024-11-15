@@ -12,7 +12,7 @@ import Description from './components/Description';
 import { BiSolidCategory } from "react-icons/bi";
 import { IoPricetagsSharp } from "react-icons/io5";
 import { MdClass } from "react-icons/md";
-import { getProductById } from '../../services/ProductService';
+import { getProductById, getReviews } from '../../services/ProductService';
 import { useParams  } from "react-router-dom";
 // import { useNavigate  } from "react-router-dom";
 import { useEffect, useCallback } from "react";
@@ -24,6 +24,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { FaLock } from "react-icons/fa";
 import { FaLockOpen } from "react-icons/fa";
 import 'react-toastify/dist/ReactToastify.css';
+import Rating from '@mui/material/Rating';
+import { TextField, Avatar, List, ListItem, ListItemAvatar, ListItemText } from '@mui/material';
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
   const backgroundColor =
@@ -45,10 +47,28 @@ const StyledBreadcrumb = styled(Chip)(({ theme }) => {
   };
 });
 
+const ReviewItem = ({ review }) => (
+  <ListItem className="review-item">
+    <ListItemAvatar className="review-item-avatar">
+      <Avatar alt={review.username} src={review.avatar} />
+    </ListItemAvatar>
+    <ListItemText
+      primary={
+        <div className="review-item-header">
+          <span className="review-item-username">{review.username}</span>
+          <Rating value={review.rating} precision={0.5} readOnly size="small" style={{ marginLeft: '8px' }} />
+        </div>
+      }
+      secondary={<span className="review-item-comment">{review.comment}</span>}
+    />
+  </ListItem>
+);
+
 const ProductDetails = () => {
   const { id } = useParams();
   // const navigate = useNavigate();
   const [productsData, setProductsData] = React.useState(null);
+  const [reviews, setReviews] = React.useState([]);
   const [open, setOpen] = React.useState(false); // Open delete dialog
   const [openEdit, setOpenEdit] = React.useState(false); // Open edit dialog
 
@@ -59,9 +79,17 @@ const ProductDetails = () => {
     }
   }, [id]);
 
+  const getProductReviews = useCallback(async () => {
+    const res = await getReviews(id);
+    if (res && res.data) {
+      setReviews(res.data);
+    }
+  }, [id]);
+
   useEffect(() => {
     getProductDetails();
-  }, [getProductDetails]);
+    getProductReviews();
+  }, [getProductDetails,getProductReviews]);
 
   const productSliderOptions = {
     dots: false,
@@ -333,6 +361,19 @@ const ProductDetails = () => {
               </div>
             </div>
           </div>
+        </div>
+        {/* Reviews */}
+        <div className='card shadow border-0 p-3 mt-4'>
+          <h5>Reviews</h5>
+          {reviews.length > 0 ? (
+            <List>
+              {reviews.map((review, index) => (
+                <ReviewItem key={index} review={review} />
+              ))}
+            </List>
+          ) : (
+            <p>No reviews yet.</p>
+          )}
         </div>
       </div>
       <DeleteDialog

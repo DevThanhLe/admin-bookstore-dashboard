@@ -11,6 +11,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import { FaShieldAlt } from "react-icons/fa";
 // import { RiAccountCircleFill } from "react-icons/ri";
 import { RiLogoutBoxRFill } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 import { IoMdNotifications } from "react-icons/io";
 import Divider from '@mui/material/Divider';
 import { MdOutlineMenu } from "react-icons/md";
@@ -26,6 +27,8 @@ const Header = () => {
 
     const context = useContext(MyContext);
 
+    const navigate = useNavigate();
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -38,6 +41,15 @@ const Header = () => {
     };
     const handleCloseNotifications = () => {
         setisOpenNotificationDrop(null);
+    };
+
+    const handleLogout = () => {
+        // Xóa token khỏi localStorage
+        window.localStorage.removeItem("token");
+        // Điều hướng trở lại trang đăng nhập hoặc trang chủ
+        navigate("/login");
+        // Hiển thị thông báo đăng xuất thành công
+        // toast.success("Logout successful");
     };
 
     // Lọc data book có quantity < 10
@@ -159,7 +171,7 @@ const Header = () => {
                                         Reset Password
                                     </MenuItem>
 
-                                    <MenuItem onClick={handleClose}>
+                                    <MenuItem onClick={handleLogout}>
                                         <ListItemIcon>
                                             <RiLogoutBoxRFill />
                                         </ListItemIcon>

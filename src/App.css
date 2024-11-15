@@ -1230,3 +1230,45 @@ table tbody .custom-td-product h6{
 .custom-border .MuiOutlinedInput-notchedOutline {
   border-color: #000;
 }
+
+.review-item {
+  align-items: flex-start;
+  display: flex;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  border-radius: 10px;
+  background: rgba(169, 169, 169, 0.4);
+  margin-bottom: 15px;
+}
+
+.review-item-avatar {
+  margin-right: 5px;
+}
+
+.review-item-avatar .MuiAvatar-root {
+  width: 45px;  /* Kích thước lớn hơn */
+  height: 45px; /* Kích thước lớn hơn */
+  border-radius: 50%;
+  border: 2px solid #007bff; /* Thêm viền ngoài màu xanh */
+}
+
+.review-item-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-item-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.review-item-username {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.review-item-comment {
+  color: #555;
+  margin-top: 5px;
+}

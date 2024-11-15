@@ -84,6 +84,11 @@ const saleProduct = (id) => {
 };
 export { saleProduct };
 
+const getReviews = (id) => {
+  return axios.get(`api/Review/${id}`);
+};
+export { getReviews };
+
 // Search Sản phẩm
 // const searchAllProduct = (brandId,nameInput) => {
 //   return axios.get
