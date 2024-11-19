@@ -89,6 +89,11 @@ const EditBookDialog = ({ open, onClose, onSave, product }) => {
       return;
     }
 
+    if (typeBookId !== 2 && quantity === 0) {
+      toast.error("số lượng của sách loại Nbook phải lớn hơn 0!");
+      return;
+    }
+
     onSave({
       title,
       authorName,

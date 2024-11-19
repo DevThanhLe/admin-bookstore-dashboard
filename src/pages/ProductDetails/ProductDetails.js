@@ -15,6 +15,7 @@ import { MdClass } from "react-icons/md";
 import { getProductById, getReviews } from '../../services/ProductService';
 import { useParams  } from "react-router-dom";
 // import { useNavigate  } from "react-router-dom";
+import { MdDateRange } from "react-icons/md";
 import { useEffect, useCallback } from "react";
 import DeleteDialog from './components/DeleteDialog';
 import { BsFillBookmarkStarFill } from "react-icons/bs";
@@ -46,6 +47,14 @@ const StyledBreadcrumb = styled(Chip)(({ theme }) => {
     },
   };
 });
+
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear().toString();
+  return `${day}/${month}/${year}`;
+}
 
 const ReviewItem = ({ review }) => (
   <ListItem className="review-item">
@@ -268,6 +277,17 @@ const ProductDetails = () => {
                     <div className='col-sm-7'>
                       {/* <span className='name'>{productsData.authorName}</span> */}
                       <span className='name'>{productsData.author_name}</span>
+                    </div>
+                  </div>
+
+                  <div className='row pb-3'>
+                    <div className='name-detail col-sm-5 d-flex align-items-center'>
+                      <MdDateRange className='icon' />
+                      <span className='name fw-bold'>Upload Date</span>
+                    </div>
+                    <div className='col-sm-7'>
+                      {/* <span className='name'>{productsData.authorName}</span> */}
+                      <span className='name'>{formatDate(productsData.uploadDate)}</span>
                     </div>
                   </div>
 

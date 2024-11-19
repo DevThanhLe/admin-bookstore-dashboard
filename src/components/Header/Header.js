@@ -25,6 +25,8 @@ const Header = () => {
     const openMyAccount = Boolean(anchorEl);
     const openNotification = Boolean(isOpenNotificationDrop);
 
+    const username = localStorage.getItem("username");
+
     const context = useContext(MyContext);
 
     const navigate = useNavigate();
@@ -74,64 +76,7 @@ const Header = () => {
                         </div>
 
                         <div className='col-8 d-flex align-items-center justify-content-end'>
-                            <div className='dropdownwrapper position-relative'>
-                                <Button className='rounded-circle me-3' onClick={handleOpenNotifications}><IoMdNotifications /></Button>
-
-                                {/* Notifications Het hang */}
-                                <Menu
-                                    anchorEl={isOpenNotificationDrop}
-                                    className='notifications dropdown_list'
-                                    id='notifications'
-                                    open={openNotification}
-                                    onClose={handleCloseNotifications}
-                                    onClick={handleCloseNotifications}
-                                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                                >
-                                    <div className='head ps-3 pb-0'>
-                                        <h4>Notifications</h4>
-                                    </div>
-
-                                    <Divider className='custom_divider mb-2' />
-
-                                    {/* Render notifications theo điều kiện  */}
-                                    {lowStockProducts.length > 0 ? (
-                                        <div>
-                                            {lowStockProducts.slice(0, 3).map(product => (
-                                                <MenuItem key={product.id} onClick={handleCloseNotifications}>
-                                                    <div className='d-flex align-items-center'>
-                                                        <div className='notiWrapper'>
-                                                            <span className='noti-product-img'>
-                                                                <img src={product.image} alt={product.name} />
-                                                            </span>
-                                                        </div>
-
-                                                        <div className='dropdownInfo'>
-                                                            <h4>
-                                                                <span>
-                                                                    <b>{product.name}</b>
-                                                                    <h5>Almost out of stock</h5>
-                                                                    <p>Remaining quantity: {product.quantity}</p>
-                                                                </span>
-                                                            </h4>
-                                                        </div>
-                                                    </div>
-                                                </MenuItem>
-                                            ))}
-                                            {lowStockProducts.length > 3 && (
-                                                // <MenuItem onClick={() => { /* Handle view all action */ }}>
-                                                <div className='d-flex align-items-center justify-content-center w-100 pe-2 ps-2 pt-2'>
-                                                    <Button className='btn-blue w-100 ps-2 pe-2'>View All</Button>
-                                                </div>
-                                            )}
-                                        </div>
-                                    ) : (
-                                        <div className='ps-3 pb-0'>
-                                            <h5>Chưa có thông báo mới nhất nào</h5>
-                                        </div>
-                                    )}
-                                </Menu>
-                            </div>
+                            {/* notificatio  */}
 
                             <div className='myAccWrapper d-flex align-items-center'>
                                 <Button className='myAcc d-flex align-items-center' onClick={handleClick}>
@@ -142,8 +87,8 @@ const Header = () => {
                                     </div>
 
                                     <div className='userInfo'>
-                                        <h4>Admin XuTha</h4>
-                                        <p className='mb-0'>lexuanthanh190503@gmail.com</p>
+                                        <h4>Hi, {username}</h4>
+                                        {/* <p className='mb-0'>lexuanthanh190503@gmail.com</p> */}
                                     </div>
                                 </Button>
 

@@ -51,7 +51,8 @@ const Login = () => {
             if (author === "Admin" || author === "admin" || author === "ADMIN") 
             {
                 window.localStorage.setItem("token", res.data.token);
-                console.log(localStorage.getItem("token"));
+                window.localStorage.setItem("username", res.data.username);
+                // console.log(localStorage.getItem("token"));
                 navigate("/Dashboard");
                 toast.success("Login success");
             } 

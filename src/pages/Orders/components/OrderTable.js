@@ -232,7 +232,7 @@ const OrderTable = () => {
                     <thead className='custom-thead'>
                         <tr>
                             <th className='bg-dark text-white'>Order ID</th>
-                            <th className='bg-dark text-white'>User Name</th>
+                            <th className='bg-dark text-white'>Full Name</th>
                             <th className='bg-dark text-white'>Phone</th>
                             <th className='bg-dark text-white'>Address</th>
                             <th className='bg-dark text-white'>Order Date</th>

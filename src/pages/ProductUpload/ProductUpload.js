@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef  } from 'react';
 import { emphasize, styled } from '@mui/material/styles';
 import Chip from '@mui/material/Chip';
 import { FaHome } from "react-icons/fa";
@@ -45,6 +45,8 @@ const ProductUpload = () => {
   const [resetGenres, setResetGenres] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const imageInputRef = useRef(null);
+
   const validateForm = () => {
     if (!title || !authorName || !description) {
       toast.error("Đừng bỏ trống các thông tin!");
@@ -68,6 +70,10 @@ const ProductUpload = () => {
     }
     if (typeBookId !== 1 && !bookFile) {
       toast.error("Cần phải tải Ebook file lên khi Type book là Ebook!");
+      return false;
+    }
+    if (typeBookId !== 2 && quantity === 0) {
+      toast.error("số lượng của sách Nbook mới tạo phải lớn hơn 0!");
       return false;
     }
     return true;
@@ -134,9 +140,6 @@ const ProductUpload = () => {
     if (typeBookId === 2) {
       setQuantity(20);
     }
-    else{
-      setQuantity(0);
-    }
   }, [typeBookId]);
 
   const resetForm = () => {
@@ -151,7 +154,13 @@ const ProductUpload = () => {
     setImagePreview(null);
     setBookFile(null);
     setResetGenres(false);
+
+    if (imageInputRef.current) {
+      imageInputRef.current.value = '';
+    }
   };
+
+  
 
   return (
     <div>
@@ -176,6 +185,7 @@ const ProductUpload = () => {
                   onChange={handleFileChange}
                   style={{ marginTop: '20px' }}
                   disabled={isLoading}
+                  ref={imageInputRef}
                 />
                 {imagePreview && (
                   <img src={imagePreview} alt='Preview' style={{ marginTop: '20px', maxWidth: '100%', height: '450px' }} />
