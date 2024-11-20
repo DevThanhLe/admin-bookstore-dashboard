@@ -14,7 +14,7 @@ import { fetchBestSellers } from '../../services/OrderService';
 import { FaRedo } from 'react-icons/fa';
 import { getStatistics } from '../../services/DashboardService';
 import Pagination from '@mui/material/Pagination';
-import { getLowStock } from '../../services/ProductService';
+import { getLowStock, getStagnant } from '../../services/ProductService';
 import DashboardTable from './components/dashboardTable';
 
 
@@ -32,9 +32,13 @@ const Dashboard = () => {
     const [amount, setAmount] = React.useState(5);   // Best Selling Products
     // const [amount1, setAmount1] = React.useState(5);  // Overstocked Products
     const [lowStock,setLowStock] = React.useState([]);
+    const [stagnant,setStagnant] = React.useState([]);
 
     const [currentPage, setCurrentPage] = React.useState(1);
     const [totalPages, setTotalPages] = React.useState(1);
+
+    const [currentPage1, setCurrentPage1] = React.useState(1);
+    const [totalPages1, setTotalPages1] = React.useState(1);
 
     const context = useContext(MyContext);
 
@@ -45,10 +49,11 @@ const Dashboard = () => {
         context.setIsHideSidebarAndHeader(false);
         getBestSeller(amount); // Fetch Best Seller data
         getData();
-        getLowStockBook(currentPage)
+        getLowStockBook(currentPage);
+        getStagnantBook(currentPage1);
         // getOverstockedProducts(amount1); // Fetch Overstocked Products data
     // }, [context, amount, amount1]);
-    }, [context, amount,currentPage]);
+    }, [context, amount,currentPage,currentPage1]);
 
     const getBestSeller = async (amount) => {
         let res = await fetchBestSellers(amount);
@@ -74,6 +79,17 @@ const Dashboard = () => {
             setTotalPages(res.data.totalPages);
         }
     };
+
+    const getStagnantBook = async (page) => {
+
+        //   let res = await fetchAllUsers(page,token);
+            let res = await getStagnant(page);
+            if (res) {
+            // pull về thì sửa gỡ command .items 
+                setStagnant(res.data.items);
+                setTotalPages1(res.data.totalPages);
+            }
+        };
 
 
     // const getOverstockedProducts = async (amount1) => {
@@ -107,8 +123,17 @@ const Dashboard = () => {
         getLowStockBook(currentPage); // Call the function to reload best seller products
     };
 
+    const handleReload2 = () => {
+        setCurrentPage1(1);
+        getStagnantBook(currentPage1); // Call the function to reload best seller products
+    };
+
     const handleChangePage = (event, page) => {
         setCurrentPage(page);
+    };
+
+    const handleChangePage1 = (event, page) => {
+        setCurrentPage1(page);
     };
 
     return (
@@ -138,7 +163,7 @@ const Dashboard = () => {
                 {/* Best Selling */}
                 <div className='card shadow border-0 p-3 mt-4'>
                     <h3 className='hd'>Best Selling Products</h3>
-                    <div className='row cardFilters mt-3'>
+                    <div className='row cardFilters mt-2'>
                         <div className='col-md-3'>
                             <h4>SHOW BY</h4>
                             <FormControl size='small' className='w-100'>
@@ -171,42 +196,61 @@ const Dashboard = () => {
 
                 {/* Overstocked Products */}
                 <div className='card shadow border-0 p-3 mt-4'>
-                    <h3 className='hd'>Low Stock Products</h3>
-                    <div className='row cardFilters mt-3'>
-                        {/* <div className='col-md-3'>
-                            <h4>SHOW BY</h4>
-                            <FormControl size='small' className='w-100'>
-                                <Select
-                                    value={showBy1}
-                                    onChange={handleShowChange1}
-                                    displayEmpty
-                                    inputProps={{ 'aria-label': 'Without label' }}
-                                    className='w-100'
-                                >
-                                    {/* <MenuItem value={0}><em>None</em></MenuItem> */}
-                                    {/* <MenuItem value={5}>5 rows</MenuItem>
-                                    <MenuItem value={10}>10 rows</MenuItem>
-                                </Select>
-                            </FormControl> */}
-                        {/* </div> */}
-                        <div className='col-md-3'>
-                            <h4>Refresh Data</h4>
+                    <div className='row cardFilters'>
+                        <div className='col-md-11 mt-2'>
+                            <h3 className='hd'>Low Stock Products</h3>
+                        </div>
+
+                        <div className='col-md-1 d-flex justify-content-center align-items-center mt-0'>
+                            {/* <h4>Refresh Data</h4> */}
                             <button 
-                                className="ms-3 btn btn-primary" 
+                                className="btn btn-primary " 
                                 onClick={handleReload1}
-                                title="Reload Best Sellers"
+                                title="Reload Low-Stock Products"
                             >
                                 <FaRedo />
                             </button>
                         </div>
                     </div>
                     {/* <DashboardProductTable productsData={overstockedProducts}/> */}
-                    <DashboardTable productsData={lowStock}/>
+                    <DashboardTable productsData={lowStock} check={0}/>
                     <div className="d-flex tableFooterDashboard">
                         <Pagination
                             count={totalPages}
                             page={currentPage}
                             onChange={handleChangePage}
+                            className='pagination'
+                            showFirstButton
+                            showLastButton
+                        />
+                    </div>
+                </div>
+
+                {/* Stagnant Products */}
+                <div className='card shadow border-0 p-3 mt-4'>
+                    <div className='row cardFilters'>
+                        <div className='col-md-11 mt-2'>
+                            <h3 className='hd'>Slow-moving inventory</h3>
+                        </div>
+
+                        <div className='col-md-1 d-flex justify-content-center align-items-center mt-0'>
+                            {/* <h4>Refresh Data</h4> */}
+                            <button 
+                                className="btn btn-primary " 
+                                onClick={handleReload2}
+                                title="Reload Slow-moving inventory"
+                            >
+                                <FaRedo />
+                            </button>
+                        </div>
+                    </div>
+                    {/* <DashboardProductTable productsData={overstockedProducts}/> */}
+                    <DashboardTable productsData={stagnant} check={1}/>
+                    <div className="d-flex tableFooterDashboard">
+                        <Pagination
+                            count={totalPages1}
+                            page={currentPage1}
+                            onChange={handleChangePage1}
                             className='pagination'
                             showFirstButton
                             showLastButton

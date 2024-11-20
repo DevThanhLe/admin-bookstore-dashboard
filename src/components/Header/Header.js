@@ -12,18 +12,18 @@ import { FaShieldAlt } from "react-icons/fa";
 // import { RiAccountCircleFill } from "react-icons/ri";
 import { RiLogoutBoxRFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
-import { IoMdNotifications } from "react-icons/io";
-import Divider from '@mui/material/Divider';
+// import { IoMdNotifications } from "react-icons/io";
+// import Divider from '@mui/material/Divider';
 import { MdOutlineMenu } from "react-icons/md";
 import { MyContext } from '../../App';
-import { productsData } from '../../services/ProductService';
+// import { productsData } from '../../services/ProductService';
 
 const Header = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const [isOpenNotificationDrop, setisOpenNotificationDrop] = React.useState(null);
+    // const [isOpenNotificationDrop, setisOpenNotificationDrop] = React.useState(null);
 
     const openMyAccount = Boolean(anchorEl);
-    const openNotification = Boolean(isOpenNotificationDrop);
+    // const openNotification = Boolean(isOpenNotificationDrop);
 
     const username = localStorage.getItem("username");
 
@@ -38,12 +38,12 @@ const Header = () => {
         setAnchorEl(null);
     };
 
-    const handleOpenNotifications = (event) => {
-        setisOpenNotificationDrop(event.currentTarget);
-    };
-    const handleCloseNotifications = () => {
-        setisOpenNotificationDrop(null);
-    };
+    // const handleOpenNotifications = (event) => {
+    //     setisOpenNotificationDrop(event.currentTarget);
+    // };
+    // const handleCloseNotifications = () => {
+    //     setisOpenNotificationDrop(null);
+    // };
 
     const handleLogout = () => {
         // Xóa token khỏi localStorage
@@ -55,7 +55,7 @@ const Header = () => {
     };
 
     // Lọc data book có quantity < 10
-    const lowStockProducts = productsData.filter(product => product.quantity < 10);
+    // const lowStockProducts = productsData.filter(product => product.quantity < 10);
 
     return (
         <div>
