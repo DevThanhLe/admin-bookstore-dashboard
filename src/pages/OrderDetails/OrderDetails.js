@@ -12,6 +12,7 @@ import { getOrderDetailsById, updateStatus } from '../../services/OrderService';
 import EditDialog from './component/EditDialog';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
+import { MdOutlineChangeCircle } from "react-icons/md";
 
 const formatDate = (dateString) => {
   const options = { day: 'numeric', month: 'numeric', year: 'numeric' };
@@ -62,6 +63,9 @@ const OrderDetails = () => {
   const [open, setOpen] = useState(false);
   const [current, setCurrent] = useState(null);
 
+  const [typeCheck, setTypeCheck] = useState(0);
+
+
   const [newStatus, setNewStatus] = useState("");
 
 
@@ -70,7 +74,7 @@ const OrderDetails = () => {
       const res = await getOrderDetailsById(id);
       if (res && res.data) {
         setOrderData(res.data);
-        console.log(res.data);
+        // console.log(res.data);
       }
     } catch (error) {
       console.error('Error fetching order data:', error);
@@ -83,8 +87,15 @@ const OrderDetails = () => {
 
   const handleClickOpen = (order) => {
       setCurrent(order);
+      setTypeCheck(1);
       setOpen(true);
   };
+
+  const handleClickOpen1 = (order) => {
+    setCurrent(order);
+    setTypeCheck(2);
+    setOpen(true);
+};
 
   const handleClose = () => {
       setOpen(false);
@@ -92,15 +103,29 @@ const OrderDetails = () => {
 
   const handleSave = async () => {
     try {
-        if (current) {
+        if (current && typeCheck === 1) {
             let res = await updateStatus(current.orderId, newStatus);
             if (res) {
                 setOpen(false);
                 toast.success("Thay đổi Status của Order thành công!");
             }
         }
+
+        if (current && typeCheck === 2) {
+          // let res = await updateStatus(current.orderId, newStatus);
+          // if (res) {
+          //     setOpen(false);
+          //     toast.success("Thay đổi Status của Order thành công!");
+          // }
+          console.log("Updated Name:", current.name); 
+          console.log("Updated Phone:", current.phone); 
+          console.log("Updated Address:", current.address);
+
+          setOpen(false);
+          toast.success("Cập nhật thông tin của Order thành công!");
+        }     
     } catch (error) {
-        toast.error("Lỗi khi thay đổi Status!");
+        toast.error("Lỗi khi thay đổi thông tin của Order!");
     } finally {
       getOrderDetails();
     }
@@ -147,11 +172,29 @@ const OrderDetails = () => {
             </div>
             <div className='col-sm-6 order-detail mb-3'>
               <h6>Total</h6>
-              <input className='w-100 p-2' type='text' value={orderData.totalAmount ? orderData.totalAmount.toLocaleString('vi-VN') + ' đ' : ''} readOnly />
+              <input className='w-100 p-2' type='text' value={orderData.totalAmount ? orderData.totalAmount.toLocaleString('vi-VN') + ' VNĐ' : ''} readOnly />
             </div>
           </div>
           <div className='buttonWrapper d-flex justify-content-end pt-3'>
-            <Button className="me-2" color="success" variant="contained" onClick={() => handleClickOpen(orderData)}><FaPencil /></Button>
+            <Button
+              className="me-2"
+              sx={{
+                backgroundColor: '#2196f3', // Màu xanh dương nhạt
+                color: '#fff', // Màu chữ trắng
+                '&:hover': {
+                  backgroundColor: '#1976d2', // Màu xanh dương đậm khi hover
+                },
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', // Hiệu ứng nổi
+                textTransform: 'none', // Giữ nguyên kiểu chữ
+                // borderRadius: '8px', // Bo tròn góc nút
+              }}
+              variant="contained"
+              title="Edit Order's informations"
+              onClick={() => handleClickOpen1(orderData)}
+            >
+              <FaPencil />
+            </Button>
+            <Button className="me-2" color="success" variant="contained" title="Update Order's status" onClick={() => handleClickOpen(orderData)}><MdOutlineChangeCircle /></Button>
             {/* <Button color="error" variant="contained"><IoTrashBin /></Button> */}
           </div>
         </div>
@@ -181,6 +224,7 @@ const OrderDetails = () => {
           setCurrent={setCurrent}
           handleSave={handleSave}
           onStatusChange={handleStatusChange}
+          dialogType={typeCheck}
       />
       <ToastContainer />
     </div>

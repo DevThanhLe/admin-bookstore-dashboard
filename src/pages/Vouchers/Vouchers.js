@@ -110,7 +110,7 @@ const Vouchers = () => {
                                         year: 'numeric',
                                         })}
                                     </td>
-                                    <td className='center-text' style={{ maxWidth: "150px" }}>{voucher.minCost.toLocaleString('vi-VN') + ' đ'}</td>
+                                    <td className='center-text' style={{ maxWidth: "150px" }}>{voucher.minCost.toLocaleString('vi-VN') + ' VNĐ'}</td>
                                     <td className='center-text' style={{ maxWidth: "50px" }}>{voucher.discount * 100 + "%"}</td>
                                     {/* <td className='center-text'>{new Date(order.orderDate).toLocaleDateString('en-GB')}</td> */}
                                 </tr>

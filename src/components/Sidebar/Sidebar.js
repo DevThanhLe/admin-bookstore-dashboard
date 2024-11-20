@@ -7,12 +7,12 @@ import { FaAngleRight } from "react-icons/fa6";
 import { FaUsers } from "react-icons/fa";
 // import { FaChartLine } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
-import { IoMdLogOut } from "react-icons/io";
+// import { IoMdLogOut } from "react-icons/io";
 // import { useContext } from 'react';
 // import { MyContext } from '../../App';
 import { PiNotepadFill } from "react-icons/pi";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+// import { useNavigate } from "react-router-dom";
+// import { toast } from "react-toastify";
 import { BiSolidDiscount } from "react-icons/bi";
 import { FaCartFlatbed } from "react-icons/fa6";
 import { PiPresentationChartFill } from "react-icons/pi";
@@ -27,16 +27,16 @@ const Sidebar = () => {
         setIsToggleSubmenu(!isToggleSubmenu)
     }
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
-    const handleLogout = () => {
-        // Xóa token khỏi localStorage
-        window.localStorage.removeItem("token");
-        // Điều hướng trở lại trang đăng nhập hoặc trang chủ
-        navigate("/login");
-        // Hiển thị thông báo đăng xuất thành công
-        toast.success("Logout successful");
-    };
+    // const handleLogout = () => {
+    //     // Xóa token khỏi localStorage
+    //     window.localStorage.removeItem("token");
+    //     // Điều hướng trở lại trang đăng nhập hoặc trang chủ
+    //     navigate("/login");
+    //     // Hiển thị thông báo đăng xuất thành công
+    //     toast.success("Logout successful");
+    // };
 
     // const context = useContext(MyContext)
 
@@ -137,13 +137,13 @@ const Sidebar = () => {
                             </Button>
                         </Link>
 
-                        <div className='logoutWrapper'>
+                        {/* <div className='logoutWrapper'>
                             <div className='logoutBox'>
                                 <Link to={'/Login'}>
                                     <Button variant="contained" onClick={handleLogout}><IoMdLogOut/>Logout</Button>
                                 </Link>
                             </div>
-                        </div>
+                        </div> */}
 
                     {/* </li> */}
                 {/* </ul> */}

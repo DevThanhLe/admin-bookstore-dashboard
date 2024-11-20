@@ -260,7 +260,7 @@ const OrderTable = () => {
                                         {order.status}
                                     </span>
                                 </td>
-                                <td className='center-text'>{order.totalAmount.toLocaleString('vi-VN')} VND</td>
+                                <td className='center-text'>{order.totalAmount.toLocaleString('vi-VN')} VNĐ</td>
                                 <td className='custom-td p-0 w-1'>
                                     <div className='actions d-flex align-items-center justify-content-between'>
                                         <Link to={`/Orders/Details/${order.orderId}`}>

@@ -68,7 +68,7 @@ const dashboardTable = ({productsData, check}) => {
                             <td className='center-text' style={{ maxWidth: "130px", color: check === 1 ? "red" : "inherit" }}>{formatDate(product.uploadDate)}</td>
                             <td className='center-text' style={{ maxWidth: "150px" }}>{bookType(product.typeBookId)}</td>
                             <td className='center-text' style={{ maxWidth: "150px", color: check === 0 ? "red" : "inherit" }}>{product.quantity}</td>
-                            <td className='center-text' style={{ maxWidth: "100px" }}>{product.price.toLocaleString('vi-VN')} VND</td>
+                            <td className='center-text' style={{ maxWidth: "100px" }}>{product.price.toLocaleString('vi-VN')} VNĐ</td>
                             <td className='center-text' style={{ maxWidth: "100px" }}>{product.rating ?? 5} ★</td>
                             <td className='custom-td p-0 w-1'>
                                 <div className='actions d-flex align-items-center justify-content-center'>
