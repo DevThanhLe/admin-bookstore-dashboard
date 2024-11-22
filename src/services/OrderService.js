@@ -65,3 +65,14 @@ const searchOrders = (searchPhone, orderMonth, orderYear, statusName, page) => {
 };
 
 export { searchOrders };
+
+const updateOrder = (id,data) => {
+  return axios.put(`api/Orders/update-information?id=${id}`, data, {
+    headers: {
+      // Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json-patch+json",
+      'accept': '*/*',
+    }
+  });
+};
+export { updateOrder };

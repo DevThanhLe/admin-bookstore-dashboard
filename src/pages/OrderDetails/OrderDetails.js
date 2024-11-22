@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import { FaPencil } from "react-icons/fa6";
 // import { IoTrashBin } from "react-icons/io5";
 import { Link, useParams } from 'react-router-dom';
-import { getOrderDetailsById, updateStatus } from '../../services/OrderService';
+import { getOrderDetailsById, updateStatus, updateOrder } from '../../services/OrderService';
 import EditDialog from './component/EditDialog';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
@@ -67,6 +67,7 @@ const OrderDetails = () => {
 
 
   const [newStatus, setNewStatus] = useState("");
+  // const [hasError, setHasError] = useState(false);
 
 
   const getOrderDetails = useCallback(async () => {
@@ -99,6 +100,7 @@ const OrderDetails = () => {
 
   const handleClose = () => {
       setOpen(false);
+      // setHasError(false);
   };
 
   const handleSave = async () => {
@@ -112,17 +114,37 @@ const OrderDetails = () => {
         }
 
         if (current && typeCheck === 2) {
-          // let res = await updateStatus(current.orderId, newStatus);
+
+          const { name, phone, address } = current;
+          if (!name || !phone || !address) 
+          {
+            // if (!hasError) {
+            //   setHasError(true);
+            // }
+            toast.error("Các trường không được để trống!");
+            return;
+          }
+
+          // let res = await updateOrder(current.orderId, newStatus);
           // if (res) {
           //     setOpen(false);
           //     toast.success("Thay đổi Status của Order thành công!");
           // }
-          console.log("Updated Name:", current.name); 
-          console.log("Updated Phone:", current.phone); 
-          console.log("Updated Address:", current.address);
 
-          setOpen(false);
-          toast.success("Cập nhật thông tin của Order thành công!");
+          // console.log("Updated Name:", current.name); 
+          // console.log("Updated Phone:", current.phone); 
+          // console.log("Updated Address:", current.address);
+
+          let res = await updateOrder(current.orderId, { name, phone, address });
+          if (res) {
+            setOpen(false);
+            toast.success("Cập nhật thông tin của Order thành công!");
+            // setHasError(false);
+          }
+
+          // setOpen(false);
+          // toast.success("Cập nhật thông tin của Order thành công!");
+          // setHasError(false);
         }     
     } catch (error) {
         toast.error("Lỗi khi thay đổi thông tin của Order!");

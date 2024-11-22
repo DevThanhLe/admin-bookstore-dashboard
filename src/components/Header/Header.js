@@ -8,7 +8,7 @@ import { MdMenuOpen } from "react-icons/md";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import { FaShieldAlt } from "react-icons/fa";
+// import { FaShieldAlt } from "react-icons/fa";
 // import { RiAccountCircleFill } from "react-icons/ri";
 import { RiLogoutBoxRFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
@@ -65,7 +65,7 @@ const Header = () => {
                         <div className='col-2'>
                             <Link to={'/Dashboard'} className='d-flex align-items-center logo'>
                                 <img src={logo} alt='bookstore_logo'/>
-                                <span className="ms-2">BOOKSTORE</span>
+                                <span className="ms-2">BOOKHUB</span>
                             </Link>
                         </div>
 
@@ -108,13 +108,6 @@ const Header = () => {
                                         </ListItemIcon>
                                         My Account
                                     </MenuItem> */}
-
-                                    <MenuItem onClick={handleClose}>
-                                        <ListItemIcon>
-                                            <FaShieldAlt />
-                                        </ListItemIcon>
-                                        Reset Password
-                                    </MenuItem>
 
                                     <MenuItem onClick={handleLogout}>
                                         <ListItemIcon>

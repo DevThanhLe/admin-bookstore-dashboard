@@ -4,7 +4,7 @@ import { MyContext } from '../../App';
 import { FaUser } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 // import { jwtDecode } from "jwt-decode";
 import { ToastContainer, toast } from 'react-toastify';
@@ -36,7 +36,7 @@ const Login = () => {
         e.preventDefault();
         
         if (!username || !password) {
-            toast.warning("Email/Password is required !");
+            toast.warning("Username/Password is required !");
             return;
         }
         
@@ -79,7 +79,7 @@ const Login = () => {
                 <div className='loginBox'>
                     <div className='logo text-center'>
                         <img className='loginLogo' src={Logo} alt='bookStore-logo' width='60px'/>
-                        <h5 className='mt-3 fw-bold text-white'>Login to BookStore's Dashboard</h5>
+                        <h5 className='mt-3 fw-bold text-white'>Login to BookHub's Dashboard</h5>
                     </div>
 
                     <div className='wrapper card border'>
@@ -101,9 +101,9 @@ const Login = () => {
                                 {/* </Link> */}
                             </div>
 
-                            <div className='form-group position-relative text-center'>
+                            {/* <div className='form-group position-relative text-center'>
                                 <Link to={'/Forgot-password'} className='link'>Forgot password ?</Link>
-                            </div>
+                            </div> */}
 
                         </form>
 
