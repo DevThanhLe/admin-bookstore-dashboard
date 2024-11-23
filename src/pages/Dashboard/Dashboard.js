@@ -89,6 +89,10 @@ const Dashboard = () => {
                 setStagnant(res.data.items);
                 setTotalPages1(res.data.totalPages);
             }
+            else if(res.status === 404){
+                setStagnant([]);
+                setTotalPages1(1);
+            }
         };
 
 
