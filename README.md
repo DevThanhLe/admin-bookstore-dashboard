@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+# Book_store Admin's web
+## Mô tả
+"Đây là một website được xây dựng bằng thư viện Reactjs của JavaScript mã nguồn mở sử dụng các thư viện như Material UI, React Icons và framework Bootstrap cùng với đó là CSS
+để xây dựng giao diện người dùng thân thiện và dễ sử dụng dành cho tài khoản quản trị của dự án."
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Yêu Cầu Hệ Thống
+Trước khi chạy dự án, đảm bảo bạn đã cài đặt:  
+- Nodejs phiên bản 20.9.0 : https://nodejs.org/en/blog/release/v20.9.0
+- IDE: Visual Studio Code 
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Cài Đặt Dự Án
+### 1. Clone Repository:
+Clone mã nguồn từ GitHub:
+```
+git clone https://github.com/DevThanhLe/admin-bookstore-dashboard.git
+```
+### 2. Di chuyển vào thư mục dự án:
+```
+cd admin-bookstore-dashboard
+```
+### 3. Cài đặt các gói phụ thuộc (dependencies) từ trong tệp package.json:
+```
+npm install
+```
+### 4. Khởi chạy dưới dạng chế độ phát triển:
+```
+npm start
+```
+### 5. Khởi chạy dưới dạng chế độ xem và tương tác:
+```
+npm test
+```
+## 6. Tài khoản admin cung cấp để truy cập:
+tài khoản : admin
+mật khẩu : admin
